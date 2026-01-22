@@ -1,1 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abonnement Auto Parking</title>
+  <style>
+    body{margin:0;font-family:Arial;background:#0b0f19;color:#fff}
+    .wrap{max-width:1000px;margin:auto;padding:40px 20px}
+    .hero{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
+    .left{flex:1;min-width:280px}
+    .right{width:360px;max-width:100%;background:#111a2e;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:14px}
+    h1{font-size:42px;margin:0 0 12px}
+    p{color:#b9c2dc;line-height:1.5}
+    .btn{display:inline-block;background:#7c5cff;color:#fff;padding:14px 18px;border-radius:12px;text-decoration:none;font-weight:700;border:none;cursor:pointer;width:100%}
+    input{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0b0f19;color:#fff;margin-top:8px}
+    .price{font-size:34px;font-weight:800;margin:10px 0}
+    .mini{font-size:13px;color:#b9c2dc;margin-top:10px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+    .card{background:#0f172a;border:1px solid rgba(255,255,255,.1);padding:14px;border-radius:14px}
+    .card b{display:block;margin-bottom:6px}
+    @media(max-width:800px){h1{font-size:34px}.features{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="left">
+        <h1>Payez votre parking automatiquement.</h1>
+        <p>
+          Fini les applis où tu dois cocher des options à chaque fois.<br>
+          Tu mets ta plaque, tu t’abonnes, et tout se fait automatiquement.
+        </p>
+
+        <div class="features">
+          <div class="card"><b>Rapide</b><span>Activation en moins de 30 secondes.</span></div>
+          <div class="card"><b>Automatique</b><span>Plus besoin de relancer l’appli.</span></div>
+          <div class="card"><b>Sécurisé</b><span>Paiement sécurisé, annulation à tout moment.</span></div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div style="font-weight:800;font-size:18px">Abonnement Auto Parking</div>
+        <div class="price">9,99€<span style="font-size:14px;color:#b9c2dc;font-weight:500"> / mois</span></div>
+
+        <label style="font-size:13px;color:#b9c2dc">Plaque d’immatriculation</label>
+        <input id="plate" placeholder="AA-123-AA" />
+
+        <button class="btn" id="subscribeBtn" style="margin-top:14px">
+          Souscrire à l’abonnement
+        </button>
+
+        <div class="mini">Annulable à tout moment • Support rapide</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STRIPE_LINK = "https://buy.stripe.com/TON_LIEN_ICI"; // 🔥 mets ton lien Stripe ici
+
+    document.getElementById("subscribeBtn").addEventListener("click", () => {
+      const plate = document.getElementById("plate").value.trim();
+      if (!plate) {
+        alert("Merci d’entrer votre plaque 🙂");
+        return;
+      }
+      localStorage.setItem("plate", plate.toUpperCase());
+      window.location.href = STRIPE_LINK;
+    });
+  </script>
+</body>
+</html>
 
