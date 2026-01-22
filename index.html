@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Vmaniche automatise la prise en compte de votre carte handicapé dans PayByPhone pour réduire le risque d'amendes par oubli." />
-  <title>Vmaniche — Évitez les amendes par oubli</title>
+  <meta name="description" content="ParkingFlash automatise la prise en compte de votre carte handicapé dans PayByPhone pour réduire le risque d'amendes par oubli." />
+  <title>ParkingFlash — Évitez les amendes par oubli</title>
 
   <style>
     /* =========================
-      Vmaniche — One-page CRO
+      ParkingFlash — One-page CRO
       - Mobile-first
       - No external deps
       - Premium Framer/Lovable vibe
@@ -52,16 +52,13 @@
     }
 
     a{ color:inherit; text-decoration:none; }
-    button, input{
-      font-family: inherit;
-    }
+    button, input{ font-family: inherit; }
 
     /* Subtle grain for premium feel */
     .grain{
       pointer-events:none;
       position:fixed; inset:0;
-      background-image:
-        radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
       background-size: 3px 3px;
       opacity:.35;
       mix-blend-mode: overlay;
@@ -161,9 +158,7 @@
       outline: 3px solid var(--focus);
       outline-offset: 3px;
     }
-    .btnGhost{
-      background: rgba(255,255,255,.04);
-    }
+    .btnGhost{ background: rgba(255,255,255,.04); }
     .btnSmall{
       padding: 10px 12px;
       border-radius: 12px;
@@ -208,16 +203,10 @@
     }
 
     /* Sections */
-    section{
-      padding: 56px 0;
-    }
-    .hero{
-      padding: 36px 0 18px;
-    }
-    .grid{
-      display:grid;
-      gap: 16px;
-    }
+    section{ padding: 56px 0; }
+    .hero{ padding: 36px 0 18px; }
+
+    .grid{ display:grid; gap: 16px; }
     .card{
       background: var(--panel);
       border: 1px solid rgba(255,255,255,.10);
@@ -233,9 +222,7 @@
       gap: 16px;
       align-items: stretch;
     }
-    .heroLeft{
-      padding: 18px 0 6px;
-    }
+    .heroLeft{ padding: 18px 0 6px; }
     .heroRight{
       position:relative;
       overflow:hidden;
@@ -250,16 +237,8 @@
       opacity:.9;
       filter: blur(1px);
     }
-    .heroRight > .inner{
-      position:relative;
-      padding: 18px;
-    }
+    .heroRight > .inner{ position:relative; padding: 18px; }
 
-    .heroBullets{
-      display:grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
     .pillRow{
       display:flex;
       flex-wrap: wrap;
@@ -291,14 +270,6 @@
       flex-direction: column;
       gap: 10px;
       margin-top: 16px;
-    }
-    .ctaUnder{
-      margin-top: 8px;
-      display:flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      color: var(--muted2);
-      font-size: 12.5px;
     }
 
     /* Problem scene */
@@ -352,7 +323,7 @@
     }
     .stepIcon svg{ opacity:.9; }
 
-    /* Before/After */
+    /* Before/With */
     .twoCol{
       display:grid;
       gap: 14px;
@@ -399,28 +370,16 @@
     }
 
     /* How it works */
-    .steps{
-      display:grid;
-      gap: 12px;
-    }
-    .howItem h3{
-      margin: 0 0 6px;
-      font-size: 16px;
-    }
+    .steps{ display:grid; gap: 12px; }
+    .howItem h3{ margin: 0 0 6px; font-size: 16px; }
 
     /* Benefits */
-    .benefits{
-      display:grid;
-      gap: 12px;
-    }
+    .benefits{ display:grid; gap: 12px; }
     .benefit h3{ margin:0 0 6px; font-size:16px; }
     .benefit p{ margin:0; }
 
     /* Trust */
-    .trustGrid{
-      display:grid;
-      gap: 12px;
-    }
+    .trustGrid{ display:grid; gap: 12px; }
     .trustItem h3{ margin:0 0 6px; font-size:16px; }
 
     /* Pricing block integrated */
@@ -460,17 +419,9 @@
     .noteBox b{ color: var(--text); }
 
     /* Testimonials */
-    .testimonials{
-      display:grid;
-      gap: 12px;
-    }
-    .quote{
-      padding: 18px;
-    }
-    .quote p{
-      color: rgba(255,255,255,.82);
-      font-size: 15.5px;
-    }
+    .testimonials{ display:grid; gap: 12px; }
+    .quote{ padding: 18px; }
+    .quote p{ color: rgba(255,255,255,.82); font-size: 15.5px; }
     .who{
       margin-top: 10px;
       display:flex;
@@ -482,10 +433,7 @@
     }
 
     /* FAQ accordion */
-    .faq{
-      display:grid;
-      gap: 10px;
-    }
+    .faq{ display:grid; gap: 10px; }
     details{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
@@ -619,26 +567,6 @@
       display:grid;
       gap: 7px;
     }
-    label{
-      font-size: 12.5px;
-      color: var(--muted2);
-      font-weight: 600;
-    }
-    input{
-      width:100%;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: var(--text);
-      outline:none;
-      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
-    }
-    input:focus{
-      border-color: rgba(34,211,238,.35);
-      box-shadow: 0 0 0 4px rgba(34,211,238,.12);
-      background: rgba(255,255,255,.06);
-    }
     .row2{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -743,12 +671,12 @@
         <div class="headerInner">
           <a class="brand" href="#top" aria-label="Aller en haut">
             <span class="logoDot" aria-hidden="true"></span>
-            <span class="brandName">Vmaniche</span>
+            <span class="brandName">ParkingFlash</span>
           </a>
 
           <nav class="nav" aria-label="Navigation">
             <a href="#probleme">Problème</a>
-            <a href="#avant-apres">Avant / Après</a>
+            <a href="#avant-apres">Avant / Avec</a>
             <a href="#comment">Comment ça marche</a>
             <a href="#abonnement">Abonnement</a>
             <a href="#faq">FAQ</a>
@@ -777,12 +705,12 @@
               </h1>
 
               <p>
-                Vmaniche automatise l’étape que beaucoup oublient : <b>activer / rattacher</b> la carte handicapé dans PayByPhone
+                ParkingFlash automatise l’étape que beaucoup oublient : <b>activer / rattacher</b> la carte handicapé dans PayByPhone
                 au moment de stationner. Vous gardez le contrôle — nous réduisons le risque d’oubli.
               </p>
 
               <div class="pillRow" aria-label="Réassurance">
-                <span class="pill"><span class="dot fast"></span> Activation 2 min</span>
+                <span class="pill"><span class="dot fast"></span> Activation rapide</span>
                 <span class="pill"><span class="dot safe"></span> Paiement sécurisé</span>
                 <span class="pill"><span class="dot ok"></span> Annulable à tout moment</span>
               </div>
@@ -794,11 +722,6 @@
                 <a class="btn btnGhost" href="#abonnement">
                   Voir ce qui est inclus
                 </a>
-              </div>
-
-              <div class="ctaUnder">
-                <span>Microcopy : abonnement mensuel, résiliation en 2 clics.</span>
-                <span>Pas un service de paiement à votre place.</span>
               </div>
             </div>
 
@@ -817,7 +740,6 @@
                 <div class="timeline">
                   <div class="stepRow">
                     <div class="stepIcon" aria-hidden="true">
-                      <!-- car -->
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M3 13l1-4a3 3 0 0 1 3-2h10a3 3 0 0 1 3 2l1 4" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linecap="round"/>
                         <path d="M5 13h14v6H5v-6Z" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linejoin="round"/>
@@ -832,7 +754,6 @@
 
                   <div class="stepRow">
                     <div class="stepIcon" aria-hidden="true">
-                      <!-- toggle -->
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M7 16h10a4 4 0 0 0 0-8H7a4 4 0 0 0 0 8Z" stroke="rgba(255,255,255,.85)" stroke-width="1.6"/>
                         <path d="M7 16a4 4 0 1 1 0-8" stroke="rgba(255,255,255,.85)" stroke-width="1.6"/>
@@ -847,7 +768,6 @@
 
                   <div class="stepRow">
                     <div class="stepIcon" aria-hidden="true">
-                      <!-- ticket -->
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M7 4h10v4a2 2 0 0 0 0 4v4H7v-4a2 2 0 0 0 0-4V4Z" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linejoin="round"/>
                         <path d="M10 8h4M10 12h4" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linecap="round"/>
@@ -864,9 +784,6 @@
                   <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
                     Activer — 30€/mois
                   </button>
-                  <div class="fine">
-                    Microcopy : formulaire de souscription front-only (démo). Aucune donnée n’est envoyée.
-                  </div>
                 </div>
               </div>
             </aside>
@@ -898,39 +815,36 @@
             </div>
 
             <div class="card cardPadLg">
-              <h3 style="margin:0 0 8px; font-size:16px;">Ce que Vmaniche corrige</h3>
+              <h3 style="margin:0 0 8px; font-size:16px;">Ce que ParkingFlash corrige</h3>
               <p style="margin:0 0 12px;">
-                Vmaniche réduit le risque d’oubli en automatisant la prise en compte de la carte handicapé,
+                ParkingFlash réduit le risque d’oubli en automatisant la prise en compte de la carte handicapé,
                 au moment où vous en avez besoin.
               </p>
 
               <div class="chip">
                 <span class="logoDot" aria-hidden="true" style="width:10px;height:10px; box-shadow:none;"></span>
-                <span><b>Important :</b> Vmaniche <b>ne paie pas</b> à votre place. Il automatise l’étape “carte handicapé”.</span>
+                <span><b>Important :</b> ParkingFlash automatise l’étape “carte handicapé”.</span>
               </div>
 
               <div style="margin-top:14px;">
                 <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
-                  Réduire le risque d’oubli — 30€/mois
+                  Activer ParkingFlash — 30€/mois
                 </button>
-                <div class="fine" style="margin-top:8px;">
-                  Microcopy : annulable à tout moment. Support inclus.
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- AVANT / APRÈS -->
+      <!-- AVANT / AVEC -->
       <section id="avant-apres">
         <div class="container">
-          <h2>Avant / Après : même routine. Moins de stress.</h2>
+          <h2>Avant / Avec : même routine. Moins de stress.</h2>
           <p>On ne change pas votre vie. On supprime une étape fragile dans un moment où vous n’avez pas envie d’y penser.</p>
 
           <div class="twoCol">
             <div class="card cardPadLg baCard">
-              <h3>Avant Vmaniche</h3>
+              <h3>Avant ParkingFlash</h3>
               <div class="list">
                 <div class="li bad">
                   <div class="mark" aria-hidden="true">✕</div>
@@ -948,7 +862,7 @@
             </div>
 
             <div class="card cardPadLg baCard">
-              <h3>Après Vmaniche</h3>
+              <h3>Avec ParkingFlash</h3>
               <div class="list">
                 <div class="li ok">
                   <div class="mark" aria-hidden="true">✓</div>
@@ -968,9 +882,8 @@
 
           <div style="margin-top:16px; display:grid; gap:10px;">
             <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
-              Activer Vmaniche — 30€/mois
+              Activer ParkingFlash — 30€/mois
             </button>
-            <div class="fine">Microcopy : activation 2 minutes. Résiliation quand vous voulez.</div>
           </div>
         </div>
       </section>
@@ -983,29 +896,27 @@
 
           <div class="steps">
             <div class="card cardPadLg howItem">
-              <h3>1) Vous activez Vmaniche</h3>
-              <p>Vous souscrivez en ligne et renseignez votre e-mail + les infos nécessaires (format démo ici).</p>
+              <h3>1) Vous activez ParkingFlash</h3>
+              <p>Vous souscrivez en ligne et renseignez les informations nécessaires.</p>
               <div class="fine">Objectif : une configuration courte, puis vous n’y pensez plus.</div>
             </div>
 
             <div class="card cardPadLg howItem">
-              <h3>2) Vmaniche automatise l’étape “carte handicapé”</h3>
+              <h3>2) ParkingFlash automatise l’étape “carte handicapé”</h3>
               <p>Au moment de stationner, la carte est prise en compte automatiquement, sans action manuelle répétée.</p>
-              <div class="fine">Vmaniche n’est pas un paiement : c’est une automatisation d’activation/rattachement.</div>
             </div>
 
             <div class="card cardPadLg howItem">
               <h3>3) Vous gardez le contrôle</h3>
-              <p>Vous utilisez PayByPhone comme d’habitude. Vmaniche réduit la probabilité d’un oubli.</p>
-              <div class="fine">Pas de promesses impossibles : juste une friction en moins.</div>
+              <p>Vous utilisez PayByPhone comme d’habitude. ParkingFlash réduit la probabilité d’un oubli.</p>
+              <div class="fine">Une friction en moins, tout simplement.</div>
             </div>
           </div>
 
           <div style="margin-top:16px; display:grid; gap:10px;">
             <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
-              Je veux l’automatisation — 30€/mois
+              Activer ParkingFlash — 30€/mois
             </button>
-            <div class="fine">Microcopy : support inclus. Annulation à tout moment.</div>
           </div>
         </div>
       </section>
@@ -1019,7 +930,7 @@
           <div class="benefits">
             <div class="card cardPadLg benefit">
               <h3>Moins d’oubli = moins de stress</h3>
-              <p>Vous arrêtez de vérifier 2 fois. Vmaniche fait l’étape fragile pour vous.</p>
+              <p>Vous arrêtez de vérifier 2 fois. ParkingFlash fait l’étape fragile pour vous.</p>
             </div>
             <div class="card cardPadLg benefit">
               <h3>Routine plus rapide</h3>
@@ -1033,9 +944,8 @@
 
           <div style="margin-top:16px; display:grid; gap:10px;">
             <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
-              Activer et simplifier — 30€/mois
+              Activer ParkingFlash — 30€/mois
             </button>
-            <div class="fine">Microcopy : activation 2 min. Résiliation quand vous voulez.</div>
           </div>
         </div>
       </section>
@@ -1044,41 +954,38 @@
       <section id="confiance">
         <div class="container">
           <h2>Confiance, sécurité, transparence</h2>
-          <p>On préfère être clair plutôt que “marketé”. Voilà ce que Vmaniche fait — et ne fait pas.</p>
+          <p>On préfère être clair plutôt que “marketé”. Voilà ce que ParkingFlash fait — et ne fait pas.</p>
 
           <div class="trustGrid">
             <div class="card cardPadLg trustItem">
               <h3>Compatibilité PayByPhone</h3>
-              <p>Vmaniche vise la prise en compte de la carte handicapé dans votre flux PayByPhone, sans remplacer l’app.</p>
-              <div class="fine">Si une limite technique existe selon votre configuration, on vous le dit.</div>
+              <p>ParkingFlash vise la prise en compte de la carte handicapé dans votre flux PayByPhone, sans remplacer l’app.</p>
             </div>
 
             <div class="card cardPadLg trustItem">
               <h3>Sécurité des données</h3>
               <p>Principe : collecter le minimum, limiter l’exposition, et privilégier la clarté.</p>
-              <div class="fine">Cette page est une démo front-only : aucune donnée n’est envoyée.</div>
             </div>
 
             <div class="card cardPadLg trustItem">
               <h3>Pas de promesses impossibles</h3>
-              <p>On ne garantit pas “zéro amende”. On réduit un risque courant : l’oubli d’activation/rattachement.</p>
-              <div class="fine">Transparence > slogans.</div>
+              <p>On ne garantit pas “zéro amende”. On réduit un risque courant : l’oubli d’activation/rattachement de la carte handicapé.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- BLOC ABONNEMENT INTÉGRÉ -->
+      <!-- BLOC ABONNEMENT -->
       <section id="abonnement">
         <div class="container">
-          <h2>L’abonnement, intégré (pas de page pricing inutile)</h2>
+          <h2>L’abonnement</h2>
           <p>Une offre unique. Simple. Et résiliable à tout moment.</p>
 
           <div class="pricingWrap">
             <div class="card cardPadLg">
               <div class="kicker" style="margin-bottom:10px;">
                 <span class="logoDot" aria-hidden="true" style="width:10px;height:10px; box-shadow:none;"></span>
-                <span><b>Vmaniche</b> — Abonnement mensuel</span>
+                <span><b>ParkingFlash</b> — Abonnement mensuel</span>
               </div>
 
               <div class="price">30€ <small>/ mois</small></div>
@@ -1093,21 +1000,16 @@
                 </div>
                 <div class="li ok">
                   <div class="mark" aria-hidden="true">✓</div>
-                  <div><b>Annulation</b> à tout moment (sans justification)</div>
+                  <div><b>Annulation</b> à tout moment</div>
                 </div>
                 <div class="li ok">
                   <div class="mark" aria-hidden="true">✓</div>
-                  <div><b>Support</b> inclus pour vous aider à configurer</div>
-                </div>
-                <div class="li ok">
-                  <div class="mark" aria-hidden="true">✓</div>
-                  <div><b>Transparence</b> : Vmaniche ne paie pas à votre place</div>
+                  <div><b>Support</b> inclus</div>
                 </div>
               </div>
 
               <div class="noteBox">
-                <b>Positionnement clair :</b> vous continuez à utiliser PayByPhone.
-                Vmaniche automatise l’étape “carte handicapé” afin de réduire les oublis — sans promesse irréaliste.
+                <b>Positionnement :</b> ParkingFlash automatise l’étape “carte handicapé” afin de réduire les oublis.
               </div>
             </div>
 
@@ -1115,19 +1017,17 @@
               <h3 style="margin:0 0 8px; font-size:16px;">Décision rapide</h3>
               <p>
                 Si vous vous êtes déjà dit “mince… j’ai oublié”, vous êtes exactement la personne visée.
-                <b>Activez</b>, testez votre routine, et gardez uniquement si ça vous simplifie vraiment la vie.
+                Activez, testez votre routine, et gardez uniquement si ça vous simplifie vraiment la vie.
               </p>
 
               <div style="display:grid; gap:10px; margin-top:12px;">
                 <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
                   Souscrire — 30€/mois
                 </button>
-                <div class="fine">Microcopy : résiliation quand vous voulez. Paiement sécurisé.</div>
 
                 <a class="btn btnGhost" href="#faq">
-                  Lire la FAQ (12+ questions)
+                  Lire la FAQ
                 </a>
-                <div class="fine">Microcopy : compatibilité, sécurité, annulation, carte… tout est expliqué.</div>
               </div>
             </div>
           </div>
@@ -1138,11 +1038,11 @@
       <section id="temoignages">
         <div class="container">
           <h2>Témoignages</h2>
-          <p>Courts, concrets, crédibles. Pas de “miracles”. Juste une étape en moins.</p>
+          <p>Courts, concrets, crédibles. Juste une étape en moins.</p>
 
           <div class="testimonials">
             <div class="card quote">
-              <p>“Je me suis rendu compte que mon problème, c’était la répétition. Vmaniche m’a retiré cette charge mentale.”</p>
+              <p>“Je me suis rendu compte que mon problème, c’était la répétition. ParkingFlash m’a retiré cette charge mentale.”</p>
               <div class="who">
                 <span>Samira</span>
                 <span>Utilisateur PayByPhone</span>
@@ -1158,7 +1058,7 @@
             </div>
 
             <div class="card quote">
-              <p>“Pas de promesses absurdes. Juste une config simple et je passe à autre chose.”</p>
+              <p>“Simple à activer et facile à garder. Je ne me prends plus la tête.”</p>
               <div class="who">
                 <span>Élodie</span>
                 <span>Routine simplifiée</span>
@@ -1168,9 +1068,8 @@
 
           <div style="margin-top:16px; display:grid; gap:10px;">
             <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
-              Activer comme eux — 30€/mois
+              Activer ParkingFlash — 30€/mois
             </button>
-            <div class="fine">Microcopy : activation 2 min. Annulable à tout moment.</div>
           </div>
         </div>
       </section>
@@ -1184,21 +1083,21 @@
           <div class="faq" aria-label="Questions fréquentes">
             <details>
               <summary>
-                Est-ce que Vmaniche paie à ma place ?
+                Est-ce que ParkingFlash paie à ma place ?
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                <b>Non.</b> Vmaniche n’est pas un outil de paiement. Il automatise uniquement l’étape liée à la <b>prise en compte de la carte handicapé</b> dans votre routine PayByPhone.
+                <b>Non.</b> ParkingFlash automatise uniquement l’étape liée à la <b>prise en compte de la carte handicapé</b> dans votre routine PayByPhone.
               </div>
             </details>
 
             <details>
               <summary>
-                Vmaniche est-il compatible avec PayByPhone ?
+                ParkingFlash est-il compatible avec PayByPhone ?
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                Vmaniche est conçu pour fonctionner <b>avec</b> votre usage de PayByPhone (et pas contre). En cas de limite selon votre configuration, le support vous guide et vous dit clairement ce qui est possible.
+                ParkingFlash est conçu pour fonctionner avec votre routine PayByPhone, sans remplacer l’application.
               </div>
             </details>
 
@@ -1208,7 +1107,7 @@
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                Vmaniche n’essaie pas de contourner quoi que ce soit : il vise à <b>réduire un oubli</b> dans une étape utilisateur. Il ne promet pas d’éviter toute sanction et ne remplace pas les règles locales.
+                ParkingFlash vise à réduire un oubli dans une étape utilisateur. Il ne remplace pas les règles locales.
               </div>
             </details>
 
@@ -1218,7 +1117,7 @@
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                En général, <b>2 minutes</b>. Vous souscrivez, vous renseignez les infos nécessaires, puis vous utilisez PayByPhone comme d’habitude.
+                Généralement, quelques minutes. Vous souscrivez, vous renseignez les infos nécessaires, puis vous utilisez PayByPhone comme d’habitude.
               </div>
             </details>
 
@@ -1228,87 +1127,37 @@
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                Oui. L’abonnement est <b>mensuel</b> et <b>annulable à tout moment</b>. Pas d’engagement longue durée.
+                Oui. L’abonnement est mensuel et annulable à tout moment.
               </div>
             </details>
 
             <details>
               <summary>
-                Que se passe-t-il si je change de carte bancaire ?
+                Et si je change de carte handicapé ?
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                Vous mettez simplement à jour vos informations de paiement dans votre espace (logique abonnement). Sur cette page démo, le formulaire est front-only.
+                Vous pourrez mettre à jour l’identifiant associé, avec aide du support si besoin.
               </div>
             </details>
 
             <details>
               <summary>
-                Et si je change de carte handicapé (nouvelle carte / renouvellement) ?
+                ParkingFlash garantit “zéro amende” ?
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                Vous mettez à jour l’identifiant/numéro associé. Le support peut vous accompagner pour que tout reste propre.
+                Non. ParkingFlash réduit le risque d’un scénario précis : l’oubli d’activation/rattachement de la carte handicapé.
               </div>
             </details>
 
             <details>
               <summary>
-                Est-ce que Vmaniche garantit “zéro amende” ?
+                ParkingFlash remplace PayByPhone ?
                 <span class="chev" aria-hidden="true">⌄</span>
               </summary>
               <div class="faqBody">
-                <b>Non.</b> Personne ne peut promettre ça sérieusement. Vmaniche réduit le risque d’un scénario précis : <b>l’oubli d’activation/rattachement</b> de la carte handicapé.
-              </div>
-            </details>
-
-            <details>
-              <summary>
-                Mes données sont-elles en sécurité ?
-                <span class="chev" aria-hidden="true">⌄</span>
-              </summary>
-              <div class="faqBody">
-                Principe : <b>minimum nécessaire</b> + clarté + bonnes pratiques. Et sur cette page : aucune donnée n’est envoyée (démo front-only).
-              </div>
-            </details>
-
-            <details>
-              <summary>
-                Est-ce que ça marche si je stationne rarement ?
-                <span class="chev" aria-hidden="true">⌄</span>
-              </summary>
-              <div class="faqBody">
-                Justement : si vous stationnez rarement, vous êtes parfois <b>moins “rodé(e)”</b>. Vmaniche vise à sécuriser cette étape quand vous n’avez pas l’habitude.
-              </div>
-            </details>
-
-            <details>
-              <summary>
-                Vmaniche remplace-t-il PayByPhone ?
-                <span class="chev" aria-hidden="true">⌄</span>
-              </summary>
-              <div class="faqBody">
-                Non. Vous continuez à utiliser PayByPhone. Vmaniche se positionne comme une <b>couche d’automatisation</b> sur l’étape “carte handicapé”.
-              </div>
-            </details>
-
-            <details>
-              <summary>
-                Y a-t-il un support si je bloque ?
-                <span class="chev" aria-hidden="true">⌄</span>
-              </summary>
-              <div class="faqBody">
-                Oui, le support est inclus dans l’abonnement. Objectif : activation rapide, et ensuite vous n’y pensez plus.
-              </div>
-            </details>
-
-            <details>
-              <summary>
-                Puis-je tester puis arrêter si ça ne me convient pas ?
-                <span class="chev" aria-hidden="true">⌄</span>
-              </summary>
-              <div class="faqBody">
-                Oui. L’abonnement est mensuel et résiliable à tout moment. Vous gardez uniquement si la routine est vraiment plus simple.
+                Non. Vous continuez à utiliser PayByPhone ; ParkingFlash automatise l’étape “carte handicapé”.
               </div>
             </details>
           </div>
@@ -1317,7 +1166,6 @@
             <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
               OK, j’active — 30€/mois
             </button>
-            <div class="fine">Microcopy : paiement sécurisé. Annulable à tout moment. Configuration rapide.</div>
           </div>
         </div>
       </section>
@@ -1329,23 +1177,17 @@
             <div class="inner">
               <h2 style="margin:0 0 10px;">Vous ne devriez pas payer pour un oubli.</h2>
               <p style="max-width: 62ch;">
-                Vmaniche est fait pour une situation simple : vous stationnez, vous allez vite,
+                ParkingFlash est fait pour une situation simple : vous stationnez, vous allez vite,
                 et vous oubliez l’étape “carte handicapé”. On automatise. Vous respirez.
               </p>
 
               <div class="ctaRow" style="margin-top:14px;">
                 <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
-                  Activer Vmaniche — 30€/mois
+                  Activer ParkingFlash — 30€/mois
                 </button>
                 <a class="btn btnGhost" href="#probleme">
                   Relire le problème
                 </a>
-              </div>
-
-              <div class="ctaUnder">
-                <span>Microcopy : résiliation à tout moment.</span>
-                <span>Microcopy : support inclus.</span>
-                <span>Microcopy : pas de promesse “zéro amende”.</span>
               </div>
             </div>
           </div>
@@ -1357,8 +1199,8 @@
         <div class="container">
           <div class="footRow">
             <div>
-              <div style="font-weight:800; color: rgba(255,255,255,.85);">Vmaniche</div>
-              <div class="fine">© <span id="year"></span> — Démo de page marketing (front-only)</div>
+              <div style="font-weight:800; color: rgba(255,255,255,.85);">ParkingFlash</div>
+              <div class="fine">© <span id="year"></span></div>
             </div>
             <div class="footLinks" aria-label="Liens">
               <a href="#abonnement">Abonnement</a>
@@ -1375,8 +1217,8 @@
       <div class="modal" role="document">
         <div class="modalHeader">
           <div>
-            <h3 id="modalTitle">Souscription Vmaniche — 30€/mois</h3>
-            <p>Annulable à tout moment. Ceci est une démo : aucune donnée n’est envoyée.</p>
+            <h3 id="modalTitle">Souscription ParkingFlash — 30€/mois</h3>
+            <p>Annulable à tout moment.</p>
           </div>
           <button class="closeBtn js-close" type="button" aria-label="Fermer">✕</button>
         </div>
@@ -1406,31 +1248,25 @@
 
             <div class="chip">
               <span class="logoDot" aria-hidden="true" style="width:10px;height:10px; box-shadow:none;"></span>
-              <span><b>Rappel :</b> Vmaniche ne paie pas le stationnement. Il automatise l’étape “carte handicapé”.</span>
+              <span><b>Rappel :</b> ParkingFlash automatise l’étape “carte handicapé”.</span>
             </div>
           </form>
         </div>
 
         <div class="modalFooter">
           <div class="success" id="successBox" aria-hidden="true">
-            ✅ <b>Demande confirmée (démo).</b> Dans une version réelle, votre abonnement serait créé et vous recevriez un e-mail de confirmation.
+            ✅ <b>Demande confirmée.</b>
           </div>
 
           <button class="btn btnPrimary" type="button" id="confirmBtn">
             Confirmer l’abonnement
           </button>
-          <div class="fine">
-            Microcopy : paiement sécurisé • annulation à tout moment • support inclus
-          </div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    // =========================
-    // Minimal JS: modal + FAQ behavior polish + input helpers
-    // =========================
     (function(){
       const overlay = document.getElementById('modalOverlay');
       const openButtons = document.querySelectorAll('.js-open');
@@ -1444,12 +1280,9 @@
 
       function openModal(){
         overlay.setAttribute('aria-hidden','false');
-        // lock scroll
         document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
-        // reset state
         successBox.setAttribute('aria-hidden','true');
-        // focus email after a tick for animation
         setTimeout(() => {
           const email = document.getElementById('email');
           if(email) email.focus();
@@ -1465,25 +1298,20 @@
       openButtons.forEach(btn => btn.addEventListener('click', openModal));
       closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
 
-      // click outside closes
       overlay.addEventListener('click', (e) => {
         if(e.target === overlay) closeModal();
       });
 
-      // ESC closes
       document.addEventListener('keydown', (e) => {
         if(e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') closeModal();
       });
 
-      // Fake "submit" (front-only)
       confirmBtn.addEventListener('click', () => {
-        // Basic validity check
         const email = document.getElementById('email');
         const card = document.getElementById('cardNumber');
         const exp  = document.getElementById('exp');
         const cvc  = document.getElementById('cvc');
 
-        // Trigger native UI if invalid
         if(!email.checkValidity() || !card.value.trim() || !exp.value.trim() || !cvc.value.trim()){
           form.querySelectorAll('input[required]').forEach(inp => {
             if(!inp.value.trim()) inp.style.borderColor = 'rgba(251,113,133,.45)';
@@ -1493,15 +1321,11 @@
           return;
         }
 
-        // Show success box
         successBox.setAttribute('aria-hidden','false');
-
-        // Soft micro animation feedback
         confirmBtn.style.transform = 'translateY(1px) scale(.99)';
         setTimeout(() => confirmBtn.style.transform = '', 120);
       });
 
-      // Input formatting helpers (minimal, optional)
       const cardNumber = document.getElementById('cardNumber');
       cardNumber.addEventListener('input', () => {
         const digits = cardNumber.value.replace(/\D/g,'').slice(0,16);
@@ -1521,7 +1345,6 @@
         cvc.value = cvc.value.replace(/\D/g,'').slice(0,4);
       });
 
-      // FAQ: close others when one opens (optional CRO cleanliness)
       const allDetails = Array.from(document.querySelectorAll('details'));
       allDetails.forEach(d => {
         d.addEventListener('toggle', () => {
