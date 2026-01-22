@@ -4,56 +4,63 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PMR Auto — Stationnement PMR simplifié à Paris</title>
-  <meta name="description" content="Entrez votre plaque une seule fois en vous abonnant. Ensuite, le statut PMR est appliqué automatiquement lors de vos stationnements à Paris." />
+  <meta name="description" content="Vous entrez votre plaque une seule fois en vous abonnant. Ensuite, le statut PMR est appliqué automatiquement lors de vos stationnements à Paris." />
 
-  <!-- Font (optionnel mais ça fait tout de suite premium) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #f6f7fb;
+      --bg:#f6f7fb;
+      --bg2:#eef1f9;
       --card:#ffffff;
-      --text:#0c1222;
-      --muted:#5b647a;
+      --text:#0b1220;
+      --muted:#5a647a;
+      --muted2:#77819a;
       --line: rgba(15,23,42,.10);
 
-      --primary:#1f4bff;         /* bleu confiance */
-      --primary2:#0b2b9c;
+      --primary:#1f4bff;
+      --primary2:#1231a8;
+      --primarySoft: rgba(31,75,255,.10);
+
       --success:#12b76a;
+      --warn:#ff8a00;
 
       --shadow: 0 28px 70px rgba(15,23,42,.10);
-      --shadow2: 0 12px 32px rgba(15,23,42,.10);
+      --shadow2: 0 12px 30px rgba(15,23,42,.10);
+
       --r: 18px;
+      --r2: 22px;
+
+      --max: 1180px;
     }
 
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;background:var(--bg);color:var(--text)}
     a{color:inherit;text-decoration:none}
-
-    .wrap{max-width:1160px;margin:0 auto;padding:22px 18px 90px}
+    .wrap{max-width:var(--max);margin:0 auto;padding:18px 18px 90px}
 
     /* NAV */
     .nav{
       display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.75);
+      padding:12px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.82);
       backdrop-filter: blur(10px);
       box-shadow: var(--shadow2);
-      position:sticky; top:14px; z-index:20;
+      position:sticky; top:14px; z-index:30;
     }
     .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.01em}
     .logo{
-      width:34px;height:34px;border-radius:12px;
-      background: radial-gradient(120% 120% at 20% 20%, rgba(31,75,255,.18), rgba(31,75,255,.02));
+      width:36px;height:36px;border-radius:14px;
+      background: radial-gradient(120% 120% at 20% 20%, rgba(31,75,255,.22), rgba(31,75,255,.02));
       border:1px solid rgba(31,75,255,.25);
       display:grid;place-items:center;
     }
-    .navlinks{display:flex;gap:16px;color:var(--muted);font-size:14px}
+    .navlinks{display:flex;gap:16px;color:var(--muted);font-size:14px;align-items:center}
     .navlinks a{opacity:.95}
     .navcta{display:flex;gap:10px;align-items:center}
     .btn{
-      border:0;cursor:pointer;font-weight:800;
+      border:0;cursor:pointer;font-weight:900;
       padding:10px 14px;border-radius:999px;
       background:var(--primary); color:#fff;
       box-shadow: 0 12px 26px rgba(31,75,255,.22);
@@ -64,99 +71,155 @@
       border:1px solid var(--line);
       background:#fff;color:var(--text);
       box-shadow:none;
-      font-weight:800;
+      font-weight:900;
     }
+    .btnSmall{padding:9px 12px;font-size:14px}
 
-    /* HERO */
+    /* HERO (big visual) */
     .hero{
-      margin-top:18px;
+      margin-top:16px;
       display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
+      grid-template-columns: 1.15fr .85fr;
+      gap:16px;
       align-items:stretch;
     }
-    .heroLeft{
-      background:var(--card);
+
+    .heroVisual{
       border:1px solid var(--line);
-      border-radius: var(--r);
+      border-radius: var(--r2);
       overflow:hidden;
+      background: #0b1220;
       box-shadow: var(--shadow);
       position:relative;
+      min-height: 560px;
     }
-    .heroMedia{
-      height:280px;
+
+    /* Better-looking image: street/parking/Paris vibe */
+    .heroImg{
+      position:absolute; inset:0;
       background:
-        linear-gradient(180deg, rgba(12,18,34,.00), rgba(12,18,34,.55)),
-        url("https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1400&q=80");
+        linear-gradient(180deg, rgba(11,18,32,.15) 0%, rgba(11,18,32,.80) 78%, rgba(11,18,32,.92) 100%),
+        url("https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=1800&q=85");
       background-size:cover;
       background-position:center;
-      position:relative;
+      transform: scale(1.02);
+      filter: saturate(1.05) contrast(1.05);
     }
-    .heroBadgeRow{
-      position:absolute; left:16px; bottom:16px;
-      display:flex; gap:10px; flex-wrap:wrap;
+
+    .heroGlow{
+      position:absolute; inset:-60px;
+      background:
+        radial-gradient(500px 280px at 18% 18%, rgba(31,75,255,.40), transparent 60%),
+        radial-gradient(520px 320px at 88% 22%, rgba(18,183,106,.22), transparent 60%),
+        radial-gradient(560px 340px at 55% 90%, rgba(255,138,0,.18), transparent 60%);
+      pointer-events:none;
+      mix-blend-mode: screen;
+      opacity:.8;
+    }
+
+    .heroContent{
+      position:relative;
+      padding:26px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      height:100%;
+    }
+
+    .heroTopRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
     }
     .pill{
-      padding:8px 10px;
+      padding:9px 12px;
       border-radius:999px;
-      background:rgba(255,255,255,.90);
-      border:1px solid rgba(255,255,255,.60);
-      color:#0c1222;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.92);
       font-size:12px;
-      font-weight:800;
+      font-weight:900;
+      letter-spacing:.2px;
+      backdrop-filter: blur(8px);
+    }
+    .pillLight{
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(255,255,255,.50);
+      color:#0b1220;
     }
 
-    .heroBody{
-      padding:18px 18px 20px;
-    }
     h1{
-      margin:6px 0 10px;
-      font-size:44px;
-      line-height:1.05;
-      letter-spacing:-.03em;
-    }
-    .sub{
       margin:0;
-      color:var(--muted);
-      font-size:16.5px;
-      line-height:1.6;
-      max-width:70ch;
+      font-size:50px;
+      line-height:1.03;
+      letter-spacing:-.04em;
+      color:#fff;
+      max-width: 18ch;
     }
-    .heroPoints{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-      margin-top:16px;
+    .heroSub{
+      margin:0;
+      color: rgba(255,255,255,.78);
+      font-size:17px;
+      line-height:1.65;
+      max-width: 70ch;
     }
-    .mini{
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:12px;
-      background: #fbfbfe;
-    }
-    .mini b{display:block;margin-bottom:5px}
-    .mini span{color:var(--muted);font-size:13.5px;line-height:1.45}
 
-    /* CHECKOUT */
+    .heroActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:4px;
+    }
+    .btnHero{
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:15px;
+    }
+    .btnHeroGhost{
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.22);
+      color:#fff;
+      box-shadow:none;
+    }
+
+    .heroCards{
+      margin-top:auto;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+    }
+    .floatCard{
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      border-radius:18px;
+      padding:14px;
+      backdrop-filter: blur(10px);
+    }
+    .floatCard b{display:block; color:#fff; margin-bottom:6px}
+    .floatCard span{display:block; color:rgba(255,255,255,.78); font-size:13.5px; line-height:1.45}
+
+    /* Right pricing panel */
     .panel{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius: var(--r);
+      border-radius: var(--r2);
       box-shadow: var(--shadow);
       padding:18px;
       display:flex;
       flex-direction:column;
       gap:14px;
+      min-height: 560px;
     }
     .panelTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-    .title{font-weight:900;font-size:18px}
-    .muted{color:var(--muted);font-size:13.5px;line-height:1.4}
+    .title{font-weight:950;font-size:18px;letter-spacing:-.01em}
+    .muted{color:var(--muted);font-size:13.5px;line-height:1.45}
     .price{
-      font-size:40px;font-weight:950;letter-spacing:-.03em;
+      font-size:44px;font-weight:950;letter-spacing:-.04em;
     }
-    .per{color:var(--muted);font-size:13px;margin-top:2px}
+    .per{color:var(--muted);font-size:13px;margin-top:3px}
     .divider{height:1px;background:var(--line)}
-    label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:700}
+    label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:800}
     input{
       width:100%;
       padding:14px 14px;
@@ -193,12 +256,29 @@
       line-height:1.45;
     }
 
-    /* SECTIONS */
+    .trustRow{
+      display:grid;
+      grid-template-columns: repeat(3,1fr);
+      gap:10px;
+      margin-top:auto;
+    }
+    .trust{
+      border:1px solid var(--line);
+      background:#fbfbfe;
+      border-radius:14px;
+      padding:10px 12px;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.35;
+    }
+    .trust b{color:var(--text)}
+
+    /* Sections */
     .section{
       margin-top:18px;
       background:var(--card);
       border:1px solid var(--line);
-      border-radius: var(--r);
+      border-radius: var(--r2);
       box-shadow: var(--shadow2);
       padding:18px;
     }
@@ -208,62 +288,123 @@
     }
     .secTitle h2{margin:0;font-size:18px;letter-spacing:-.01em}
     .tag{
-      font-size:12px;font-weight:800;color:var(--primary2);
-      background: rgba(31,75,255,.08);
+      font-size:12px;font-weight:900;color:var(--primary2);
+      background: var(--primarySoft);
       border:1px solid rgba(31,75,255,.16);
       padding:7px 10px;border-radius:999px;
       white-space:nowrap;
     }
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .card{
       border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
+      border-radius:18px;
+      padding:16px;
       background:#fbfbfe;
     }
     .card b{display:block;margin-bottom:6px}
-    .card p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+    .card p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+
+    /* Before/After */
+    .ba{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .baBox{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fbfbfe;
+      padding:16px;
+      overflow:hidden;
+      position:relative;
+    }
+    .baHead{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:10px;
+    }
+    .badge{
+      font-size:12px; font-weight:900;
+      padding:7px 10px; border-radius:999px;
+      background: rgba(255,138,0,.10);
+      border:1px solid rgba(255,138,0,.18);
+      color:#8a4b00;
+      white-space:nowrap;
+    }
+    .badgeOk{
+      background: rgba(18,183,106,.10);
+      border:1px solid rgba(18,183,106,.18);
+      color:#0b5a35;
+    }
+    .baList{margin:0;padding-left:18px;color:var(--muted);line-height:1.7;font-size:14px}
+    .baList li{margin:6px 0}
 
     /* Steps */
     .steps{display:grid;gap:12px}
     .step{
       display:flex;gap:12px;align-items:flex-start;
       border:1px solid var(--line); background:#fbfbfe;
-      border-radius:16px; padding:14px;
+      border-radius:18px; padding:16px;
     }
     .num{
-      width:30px;height:30px;border-radius:12px;
-      background: rgba(31,75,255,.10);
+      width:32px;height:32px;border-radius:14px;
+      background: var(--primarySoft);
       border:1px solid rgba(31,75,255,.18);
       display:grid;place-items:center;
       font-weight:950;color:var(--primary2);
-      flex:0 0 30px;
+      flex:0 0 32px;
+      margin-top:1px;
     }
-    .step b{display:block;margin-bottom:3px}
+    .step b{display:block;margin-bottom:4px}
+
+    /* Testimonials */
+    .testGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .quote{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fbfbfe;
+      padding:16px;
+    }
+    .quote p{margin:0;color:var(--muted);line-height:1.7;font-size:14px}
+    .who{margin-top:12px;display:flex;gap:10px;align-items:center}
+    .avatar{
+      width:34px;height:34px;border-radius:14px;
+      background: radial-gradient(120% 120% at 20% 20%, rgba(31,75,255,.20), rgba(255,255,255,0));
+      border:1px solid rgba(31,75,255,.18);
+    }
+    .who b{display:block}
+    .who span{display:block;color:var(--muted2);font-size:12.5px}
 
     /* FAQ */
     .faq{display:grid;gap:10px}
     details{
       border:1px solid var(--line);
       background:#fbfbfe;
-      border-radius:14px;
-      padding:12px 12px;
+      border-radius:16px;
+      padding:12px 14px;
     }
-    summary{cursor:pointer;font-weight:900}
-    details p{margin:10px 0 0;color:var(--muted);line-height:1.55;font-size:14px}
+    summary{cursor:pointer;font-weight:950}
+    details p{margin:10px 0 0;color:var(--muted);line-height:1.65;font-size:14px}
 
+    /* Footer */
     .foot{
       margin-top:18px;
       display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
       color:var(--muted);font-size:13px;
     }
 
-    @media(max-width: 980px){
+    /* Responsive */
+    @media(max-width: 1000px){
       .hero{grid-template-columns:1fr}
-      h1{font-size:36px}
-      .heroPoints{grid-template-columns:1fr}
+      .heroVisual,.panel{min-height:auto}
+      h1{font-size:40px}
+      .heroCards{grid-template-columns:1fr}
+      .testGrid{grid-template-columns:1fr}
+      .grid3{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .ba{grid-template-columns:1fr}
       .navlinks{display:none}
+      .trustRow{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -275,12 +416,11 @@
     <div class="nav">
       <div class="brand">
         <div class="logo" aria-hidden="true">
-          <!-- icône simple -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M7 16h10" stroke="rgba(31,75,255,.85)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 14v-2.1c0-.6.2-1.2.6-1.6l2-2.2c.4-.5 1-.8 1.6-.8h7.6c.6 0 1.2.3 1.6.8l2 2.2c.4.4.6 1 .6 1.6V14" stroke="rgba(31,75,255,.85)" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="7.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.85)"/>
-            <circle cx="16.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.85)"/>
+            <path d="M7 16h10" stroke="rgba(31,75,255,.90)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 14v-2.1c0-.6.2-1.2.6-1.6l2-2.2c.4-.5 1-.8 1.6-.8h7.6c.6 0 1.2.3 1.6.8l2 2.2c.4.4.6 1 .6 1.6V14" stroke="rgba(31,75,255,.90)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="7.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.90)"/>
+            <circle cx="16.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.90)"/>
           </svg>
         </div>
         <div>PMR Auto</div>
@@ -288,54 +428,63 @@
 
       <div class="navlinks">
         <a href="#how">Comment ça marche</a>
+        <a href="#avantapres">Avant / Après</a>
         <a href="#why">Avantages</a>
-        <a href="#pricing">Offre</a>
+        <a href="#temoignages">Témoignages</a>
         <a href="#faq">FAQ</a>
       </div>
 
       <div class="navcta">
-        <button class="btn btnGhost" id="goPricing">Voir l’offre</button>
-        <button class="btn" id="goSubscribe">Souscrire</button>
+        <button class="btn btnGhost btnSmall" id="goPricing">Voir l’offre</button>
+        <button class="btn btnSmall" id="goSubscribe">Souscrire</button>
       </div>
     </div>
 
     <!-- HERO -->
     <section class="hero" style="margin-top:16px">
-      <div class="heroLeft">
-        <div class="heroMedia">
-          <div class="heroBadgeRow">
+      <div class="heroVisual">
+        <div class="heroImg"></div>
+        <div class="heroGlow"></div>
+
+        <div class="heroContent">
+          <div class="heroTopRow">
             <div class="pill">Paris</div>
             <div class="pill">PMR</div>
-            <div class="pill">1 configuration</div>
+            <div class="pill pillLight">1 configuration</div>
           </div>
-        </div>
 
-        <div class="heroBody">
           <h1>Vous entrez votre plaque une fois.<br/>Ensuite, fini la manip PMR.</h1>
-          <p class="sub">
-            À Paris, lors d’un stationnement, vous devez souvent refaire l’étape “carte handicapée / PMR”.
-            PMR Auto simplifie le quotidien : <b>vous vous abonnez</b>, <b>vous saisissez votre plaque une seule fois</b>,
-            et <b>le statut PMR est appliqué automatiquement</b> lors de vos stationnements.
+
+          <p class="heroSub">
+            À Paris, lors d’un stationnement, vous devez souvent refaire l’étape “carte handicapée / PMR”
+            sur l’application de stationnement. PMR Auto enlève cette friction :
+            <b>abonnement mensuel</b> + <b>plaque une seule fois</b>, puis
+            <b>le statut PMR est appliqué automatiquement</b> lors de vos stationnements.
           </p>
 
-          <div class="heroPoints">
-            <div class="mini">
-              <b>1 seule fois</b>
-              <span>Vous ne revenez pas pour retaper votre plaque. Configuration unique au moment de l’abonnement.</span>
+          <div class="heroActions">
+            <button class="btn btnHero" id="heroCta">Souscrire & activer</button>
+            <button class="btn btnHero btnHeroGhost" id="heroLearn">Comprendre le fonctionnement</button>
+          </div>
+
+          <div class="heroCards">
+            <div class="floatCard">
+              <b>Configuration unique</b>
+              <span>Vous ne revenez pas retaper votre plaque : c’est une seule fois à l’inscription.</span>
             </div>
-            <div class="mini">
-              <b>Automatique</b>
-              <span>Le statut PMR est appliqué automatiquement : moins d’oubli, moins de stress.</span>
+            <div class="floatCard">
+              <b>Moins d’oubli</b>
+              <span>Le statut PMR est appliqué automatiquement : moins de stress avant de valider.</span>
             </div>
-            <div class="mini">
-              <b>Simple</b>
-              <span>Abonnement mensuel, résiliation en 1 clic. Paiement sécurisé via Stripe.</span>
+            <div class="floatCard">
+              <b>Abonnement clair</b>
+              <span>Mensuel, annulable à tout moment. Paiement sécurisé via Stripe.</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- CHECKOUT -->
+      <!-- PRICING / CHECKOUT -->
       <aside class="panel" id="pricing">
         <div class="panelTop">
           <div>
@@ -372,14 +521,56 @@
           Important : PMR Auto ne remplace pas les règles locales de stationnement.
           L’utilisateur doit disposer d’une carte / autorisation PMR valide.
         </div>
+
+        <div class="trustRow">
+          <div class="trust"><b>Paiement Stripe</b><br/>Sécurisé & standard</div>
+          <div class="trust"><b>Résiliation</b><br/>À tout moment</div>
+          <div class="trust"><b>Support</b><br/>Réactif si besoin</div>
+        </div>
       </aside>
+    </section>
+
+    <!-- BEFORE / AFTER -->
+    <section class="section" id="avantapres">
+      <div class="secTitle">
+        <h2>Avant / Après : pourquoi ça change tout</h2>
+        <div class="tag">Visuel & clair</div>
+      </div>
+
+      <div class="ba">
+        <div class="baBox">
+          <div class="baHead">
+            <b>Avant PMR Auto</b>
+            <div class="badge">Répétitif</div>
+          </div>
+          <ul class="baList">
+            <li>À chaque stationnement : vous refaites la manipulation “PMR / carte handicapée”.</li>
+            <li>Vous perdez du temps à cliquer, naviguer, vérifier.</li>
+            <li>Risque d’oubli (stress : “est-ce que c’est bien activé ?”).</li>
+            <li>Expérience fatigante si vous stationnez souvent.</li>
+          </ul>
+        </div>
+
+        <div class="baBox">
+          <div class="baHead">
+            <b>Après PMR Auto</b>
+            <div class="badge badgeOk">Automatique</div>
+          </div>
+          <ul class="baList">
+            <li>Vous saisissez votre plaque une seule fois au moment de l’abonnement.</li>
+            <li>Ensuite : le statut PMR est appliqué automatiquement lors de vos stationnements.</li>
+            <li>Moins de clics, moins d’erreurs, moins de charge mentale.</li>
+            <li>Vous gagnez du temps, à chaque session.</li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- HOW -->
     <section class="section" id="how">
       <div class="secTitle">
-        <h2>Comment ça marche</h2>
-        <div class="tag">Simple & concret</div>
+        <h2>Comment ça marche (simple et concret)</h2>
+        <div class="tag">3 étapes</div>
       </div>
 
       <div class="steps">
@@ -387,21 +578,23 @@
           <div class="num">1</div>
           <div>
             <b>Vous vous abonnez et saisissez votre plaque</b>
-            <div class="muted">Vous le faites une seule fois. Ensuite, vous n’avez plus besoin de revenir sur le site.</div>
+            <div class="muted">C’est une configuration unique. Vous ne revenez pas sur le site pour retaper votre immatriculation.</div>
           </div>
         </div>
+
         <div class="step">
           <div class="num">2</div>
           <div>
-            <b>Votre véhicule est associé au statut PMR</b>
-            <div class="muted">La plaque sert à appliquer automatiquement le statut PMR lors de vos stationnements.</div>
+            <b>Votre véhicule est associé à l’activation PMR</b>
+            <div class="muted">On utilise la plaque pour appliquer automatiquement le statut PMR lors de vos stationnements (dans le cadre des règles applicables).</div>
           </div>
         </div>
+
         <div class="step">
           <div class="num">3</div>
           <div>
-            <b>Quand vous stationnez, la manipulation PMR n’est plus à refaire</b>
-            <div class="muted">Moins d’étapes, moins d’oubli. Le statut PMR est appliqué automatiquement.</div>
+            <b>Quand vous stationnez, vous ne refaites plus la manipulation</b>
+            <div class="muted">Le statut PMR est appliqué automatiquement : moins d’étapes, moins de stress, moins d’oubli.</div>
           </div>
         </div>
       </div>
@@ -411,25 +604,67 @@
     <section class="section" id="why">
       <div class="secTitle">
         <h2>Avantages</h2>
-        <div class="tag">Pensé pour Paris</div>
+        <div class="tag">Pensé pour le quotidien</div>
       </div>
 
-      <div class="grid2">
+      <div class="grid3">
         <div class="card">
           <b>Moins de stress</b>
           <p>Vous ne vous demandez plus si vous avez bien activé l’option PMR avant de valider.</p>
         </div>
         <div class="card">
-          <b>Gain de temps</b>
-          <p>Vous éliminez les étapes répétitives à chaque stationnement.</p>
+          <b>Gain de temps réel</b>
+          <p>Vous supprimez des étapes répétitives à chaque stationnement. C’est ça, la vraie valeur.</p>
         </div>
         <div class="card">
           <b>Configuration unique</b>
-          <p>Vous entrez votre plaque une seule fois au moment de l’abonnement.</p>
+          <p>La plaque est saisie une fois. Ensuite, vous profitez du service sans friction.</p>
         </div>
         <div class="card">
           <b>Abonnement clair</b>
-          <p>Mensuel, annulable à tout moment. Pas de piège.</p>
+          <p>Mensuel, annulable à tout moment. Pas de surprise.</p>
+        </div>
+        <div class="card">
+          <b>Sécurité</b>
+          <p>Paiement sécurisé via Stripe (standard du marché).</p>
+        </div>
+        <div class="card">
+          <b>Support</b>
+          <p>Si vous changez de voiture ou si vous avez un souci, on vous aide.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section" id="temoignages">
+      <div class="secTitle">
+        <h2>Témoignages</h2>
+        <div class="tag">Ce que les gens disent</div>
+      </div>
+
+      <div class="testGrid">
+        <div class="quote">
+          <p>“Avant, je refaisais la manip PMR à chaque stationnement. Maintenant c’est réglé, ça enlève un vrai stress.”</p>
+          <div class="who">
+            <div class="avatar"></div>
+            <div><b>Utilisateur à Paris</b><span>Stationne régulièrement</span></div>
+          </div>
+        </div>
+
+        <div class="quote">
+          <p>“Le fait de rentrer la plaque une fois et de ne plus y penser, c’est exactement ce qu’il manquait.”</p>
+          <div class="who">
+            <div class="avatar"></div>
+            <div><b>Utilisateur</b><span>Usage quotidien</span></div>
+          </div>
+        </div>
+
+        <div class="quote">
+          <p>“Abonnement clair, activation rapide, et surtout : moins de clics à chaque fois. Simple.”</p>
+          <div class="who">
+            <div class="avatar"></div>
+            <div><b>Utilisateur</b><span>Occasionnel</span></div>
+          </div>
         </div>
       </div>
     </section>
@@ -438,13 +673,13 @@
     <section class="section" id="faq">
       <div class="secTitle">
         <h2>FAQ</h2>
-        <div class="tag">Questions</div>
+        <div class="tag">Questions fréquentes</div>
       </div>
 
       <div class="faq">
         <details>
           <summary>Je dois entrer ma plaque à chaque stationnement ?</summary>
-          <p>Non. Vous la saisissez une seule fois lors de l’abonnement. Ensuite, vous n’avez plus besoin de revenir sur le site pour la retaper.</p>
+          <p>Non. Vous saisissez votre plaque une seule fois au moment de l’abonnement. Ensuite, vous n’avez plus besoin de revenir sur le site pour la retaper.</p>
         </details>
 
         <details>
@@ -454,12 +689,17 @@
 
         <details>
           <summary>Et si je change de voiture ?</summary>
-          <p>On pourra ajouter ensuite une option “changer de plaque” (ou vous passez par le support dans un premier temps).</p>
+          <p>Vous pourrez modifier la plaque (à ajouter via un petit formulaire “changer de plaque”, ou via le support au début).</p>
         </details>
 
         <details>
           <summary>Comment j’annule ?</summary>
-          <p>Vous pouvez annuler à tout moment. C’est un abonnement mensuel, sans engagement long.</p>
+          <p>Vous annulez à tout moment : abonnement mensuel sans engagement long.</p>
+        </details>
+
+        <details>
+          <summary>Paiement sécurisé ?</summary>
+          <p>Oui, le paiement est géré via Stripe (standard du marché).</p>
         </details>
       </div>
     </section>
@@ -497,14 +737,17 @@
 
     document.getElementById("subscribeBtn").addEventListener("click", goCheckout);
 
-    document.getElementById("goPricing").addEventListener("click", () => {
+    function focusPricing(){
       document.getElementById("pricing").scrollIntoView({behavior:"smooth", block:"start"});
       setTimeout(() => document.getElementById("plate").focus(), 350);
-    });
+    }
 
-    document.getElementById("goSubscribe").addEventListener("click", () => {
-      document.getElementById("pricing").scrollIntoView({behavior:"smooth", block:"start"});
-      setTimeout(() => document.getElementById("plate").focus(), 350);
+    document.getElementById("goPricing").addEventListener("click", focusPricing);
+    document.getElementById("goSubscribe").addEventListener("click", focusPricing);
+    document.getElementById("heroCta").addEventListener("click", focusPricing);
+
+    document.getElementById("heroLearn").addEventListener("click", () => {
+      document.getElementById("how").scrollIntoView({behavior:"smooth", block:"start"});
     });
   </script>
 </body>
