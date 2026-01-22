@@ -3,477 +3,472 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PMR Auto — Abonnement</title>
-  <meta name="description" content="Une seule configuration (plaque) + abonnement. Ensuite, le statut PMR est appliqué automatiquement à vos stationnements à Paris." />
+  <title>PMR Auto — Stationnement PMR simplifié à Paris</title>
+  <meta name="description" content="Entrez votre plaque une seule fois en vous abonnant. Ensuite, le statut PMR est appliqué automatiquement lors de vos stationnements à Paris." />
+
+  <!-- Font (optionnel mais ça fait tout de suite premium) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      /* Auto / premium */
-      --bg:#06070a;
-      --bg2:#0b0f17;
-      --card: rgba(255,255,255,.06);
-      --line: rgba(255,255,255,.12);
-      --text:#f4f6ff;
-      --muted: rgba(244,246,255,.72);
+      --bg: #f6f7fb;
+      --card:#ffffff;
+      --text:#0c1222;
+      --muted:#5b647a;
+      --line: rgba(15,23,42,.10);
 
-      /* accents “auto” (pas IA) */
-      --blue:#2b72ff;
-      --orange:#ff8a00;
+      --primary:#1f4bff;         /* bleu confiance */
+      --primary2:#0b2b9c;
+      --success:#12b76a;
 
-      --shadow: 0 26px 80px rgba(0,0,0,.6);
-      --r:18px;
+      --shadow: 0 28px 70px rgba(15,23,42,.10);
+      --shadow2: 0 12px 32px rgba(15,23,42,.10);
+      --r: 18px;
     }
 
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:var(--bg); color:var(--text)}
+    html,body{margin:0;padding:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;background:var(--bg);color:var(--text)}
     a{color:inherit;text-decoration:none}
 
-    .bg{
-      min-height:100vh;
-      background:
-        radial-gradient(900px 550px at 20% 0%, rgba(43,114,255,.22), transparent 60%),
-        radial-gradient(900px 600px at 95% 20%, rgba(255,138,0,.14), transparent 55%),
-        radial-gradient(900px 600px at 40% 95%, rgba(43,114,255,.12), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg2) 70%, #05060a);
-      overflow:hidden;
-    }
-
-    .wrap{max-width:1120px;margin:0 auto;padding:22px 16px 90px}
+    .wrap{max-width:1160px;margin:0 auto;padding:22px 18px 90px}
 
     /* NAV */
     .nav{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px 14px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:rgba(0,0,0,.28);
-      backdrop-filter: blur(12px);
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.75);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow2);
+      position:sticky; top:14px; z-index:20;
     }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900; letter-spacing:.2px;
-    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.01em}
     .logo{
-      width:28px; height:28px; border-radius:10px;
-      background:linear-gradient(135deg, rgba(43,114,255,.95), rgba(255,138,0,.95));
-      box-shadow: 0 0 0 6px rgba(43,114,255,.12);
-      display:grid; place-items:center;
+      width:34px;height:34px;border-radius:12px;
+      background: radial-gradient(120% 120% at 20% 20%, rgba(31,75,255,.18), rgba(31,75,255,.02));
+      border:1px solid rgba(31,75,255,.25);
+      display:grid;place-items:center;
     }
-    .logo svg{opacity:.95}
-    .brandName{font-size:14px; opacity:.95}
-    .navlinks{display:flex; gap:16px; color:var(--muted); font-size:14px; align-items:center}
-    .navlinks a{opacity:.9}
-    .navcta{display:flex; gap:10px; align-items:center}
+    .navlinks{display:flex;gap:16px;color:var(--muted);font-size:14px}
+    .navlinks a{opacity:.95}
+    .navcta{display:flex;gap:10px;align-items:center}
     .btn{
-      border:0; cursor:pointer; font-weight:900;
-      padding:10px 14px; border-radius:999px;
-      background:linear-gradient(135deg, var(--blue), var(--orange));
-      color:#0b0f17;
-      box-shadow: 0 18px 60px rgba(43,114,255,.18);
+      border:0;cursor:pointer;font-weight:800;
+      padding:10px 14px;border-radius:999px;
+      background:var(--primary); color:#fff;
+      box-shadow: 0 12px 26px rgba(31,75,255,.22);
       white-space:nowrap;
+    }
+    .btn:hover{background:var(--primary2)}
+    .btnGhost{
+      border:1px solid var(--line);
+      background:#fff;color:var(--text);
+      box-shadow:none;
+      font-weight:800;
     }
 
     /* HERO */
     .hero{
       margin-top:18px;
-      display:grid; grid-template-columns: 1.1fr .9fr; gap:18px;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:18px;
       align-items:stretch;
     }
     .heroLeft{
+      background:var(--card);
       border:1px solid var(--line);
-      background:rgba(255,255,255,.03);
-      border-radius:var(--r);
-      padding:22px;
-      position:relative;
+      border-radius: var(--r);
       overflow:hidden;
       box-shadow: var(--shadow);
+      position:relative;
     }
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-      font-size:13px;
+    .heroMedia{
+      height:280px;
+      background:
+        linear-gradient(180deg, rgba(12,18,34,.00), rgba(12,18,34,.55)),
+        url("https://images.unsplash.com/photo-1504215680853-026ed2a45def?auto=format&fit=crop&w=1400&q=80");
+      background-size:cover;
+      background-position:center;
+      position:relative;
+    }
+    .heroBadgeRow{
+      position:absolute; left:16px; bottom:16px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .pill{
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.90);
+      border:1px solid rgba(255,255,255,.60);
+      color:#0c1222;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .heroBody{
+      padding:18px 18px 20px;
     }
     h1{
-      margin:12px 0 10px;
-      font-size:44px; line-height:1.05; letter-spacing:-.02em;
+      margin:6px 0 10px;
+      font-size:44px;
+      line-height:1.05;
+      letter-spacing:-.03em;
     }
     .sub{
+      margin:0;
       color:var(--muted);
       font-size:16.5px;
       line-height:1.6;
-      margin:0 0 14px;
       max-width:70ch;
     }
-
-    .bullets{
+    .heroPoints{
       display:grid;
-      gap:10px;
-      margin-top:14px;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:16px;
     }
-    .b{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
-    }
-    .bIcon{
-      width:20px; height:20px; border-radius:7px;
-      background:rgba(43,114,255,.18);
-      border:1px solid rgba(43,114,255,.35);
-      display:grid; place-items:center;
-      flex:0 0 20px;
-      margin-top:2px;
-    }
-    .b b{display:block; margin-bottom:2px}
-    .b span{color:var(--muted); font-size:14px; line-height:1.45}
-
-    /* Right checkout card */
-    .heroRight{
+    .mini{
       border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border-radius:var(--r);
-      padding:18px;
-      box-shadow: var(--shadow);
-      display:flex; flex-direction:column; gap:14px;
+      border-radius:16px;
+      padding:12px;
+      background: #fbfbfe;
     }
-    .priceRow{display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
-    .title{font-weight:950; font-size:18px}
-    .muted{color:var(--muted); font-size:13px; line-height:1.35}
-    .price{font-size:38px; font-weight:950; letter-spacing:-.02em}
-    .per{color:var(--muted); font-size:13px; margin-top:4px}
-    .divider{height:1px; background:rgba(255,255,255,.10)}
-    label{display:block; color:var(--muted); font-size:13px; margin:0 0 6px}
+    .mini b{display:block;margin-bottom:5px}
+    .mini span{color:var(--muted);font-size:13.5px;line-height:1.45}
+
+    /* CHECKOUT */
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .panelTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+    .title{font-weight:900;font-size:18px}
+    .muted{color:var(--muted);font-size:13.5px;line-height:1.4}
+    .price{
+      font-size:40px;font-weight:950;letter-spacing:-.03em;
+    }
+    .per{color:var(--muted);font-size:13px;margin-top:2px}
+    .divider{height:1px;background:var(--line)}
+    label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:700}
     input{
       width:100%;
       padding:14px 14px;
       border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(0,0,0,.28);
-      color:var(--text);
-      outline:none;
+      border:1px solid rgba(15,23,42,.14);
+      background:#fff;
       font-size:16px;
+      outline:none;
     }
     input:focus{
-      border-color: rgba(43,114,255,.6);
-      box-shadow: 0 0 0 4px rgba(43,114,255,.14);
+      border-color: rgba(31,75,255,.55);
+      box-shadow: 0 0 0 4px rgba(31,75,255,.12);
     }
-    .btnBig{width:100%; padding:14px 16px; border-radius:14px; font-size:16px}
-    .checks{display:grid; gap:10px; margin:0; padding:0; list-style:none}
-    .checks li{display:flex; gap:10px; align-items:flex-start; color:var(--muted); font-size:14px}
+    .btnBig{padding:14px 16px;border-radius:14px;font-size:16px}
+    .checks{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+    .checks li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:14px}
     .tick{
-      width:18px; height:18px; border-radius:6px;
-      display:grid; place-items:center;
-      background:rgba(255,138,0,.14);
-      border:1px solid rgba(255,138,0,.30);
-      color:rgba(255,138,0,.95);
+      width:18px;height:18px;border-radius:6px;
+      display:grid;place-items:center;
+      background: rgba(18,183,106,.12);
+      border:1px solid rgba(18,183,106,.25);
+      color: var(--success);
       font-weight:900;
       flex:0 0 18px;
       margin-top:2px;
     }
-    .notice{
-      color:rgba(244,246,255,.58);
-      font-size:12px; line-height:1.45;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      padding:10px 12px;
+    .note{
+      border:1px solid var(--line);
+      background:#fbfbfe;
       border-radius:14px;
+      padding:10px 12px;
+      color: var(--muted);
+      font-size:12.5px;
+      line-height:1.45;
     }
 
     /* SECTIONS */
     .section{
       margin-top:18px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.02);
-      border-radius:var(--r);
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: var(--shadow2);
       padding:18px;
     }
     .secTitle{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      margin-bottom:10px;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+      margin-bottom:12px;
     }
-    .secTitle h2{margin:0; font-size:18px}
+    .secTitle h2{margin:0;font-size:18px;letter-spacing:-.01em}
     .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.03);
-      padding:7px 10px;
-      border-radius:999px;
-      color:var(--muted);
-      font-size:12px;
+      font-size:12px;font-weight:800;color:var(--primary2);
+      background: rgba(31,75,255,.08);
+      border:1px solid rgba(31,75,255,.16);
+      padding:7px 10px;border-radius:999px;
       white-space:nowrap;
     }
-    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
-    .grid2{display:grid; grid-template-columns: repeat(2, 1fr); gap:12px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
     .card{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
       border-radius:16px;
       padding:14px;
+      background:#fbfbfe;
     }
-    .card b{display:block; margin-bottom:6px}
-    .card .muted{font-size:13.5px}
+    .card b{display:block;margin-bottom:6px}
+    .card p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
 
-    .steps{
-      display:grid; gap:12px; margin-top:12px;
-    }
+    /* Steps */
+    .steps{display:grid;gap:12px}
     .step{
-      display:flex; gap:12px; align-items:flex-start;
-      padding:14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.04);
+      display:flex;gap:12px;align-items:flex-start;
+      border:1px solid var(--line); background:#fbfbfe;
+      border-radius:16px; padding:14px;
     }
     .num{
-      width:28px; height:28px; border-radius:12px;
-      background:rgba(43,114,255,.18);
-      border:1px solid rgba(43,114,255,.35);
-      display:grid; place-items:center;
-      font-weight:950;
-      flex:0 0 28px;
+      width:30px;height:30px;border-radius:12px;
+      background: rgba(31,75,255,.10);
+      border:1px solid rgba(31,75,255,.18);
+      display:grid;place-items:center;
+      font-weight:950;color:var(--primary2);
+      flex:0 0 30px;
     }
-    .step b{display:block; margin-bottom:3px}
+    .step b{display:block;margin-bottom:3px}
 
-    .faq{display:grid; gap:10px; margin-top:12px}
+    /* FAQ */
+    .faq{display:grid;gap:10px}
     details{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      background:#fbfbfe;
       border-radius:14px;
       padding:12px 12px;
     }
-    summary{cursor:pointer; font-weight:900}
-    details p{color:var(--muted); margin:10px 0 0; line-height:1.5; font-size:14px}
+    summary{cursor:pointer;font-weight:900}
+    details p{margin:10px 0 0;color:var(--muted);line-height:1.55;font-size:14px}
 
     .foot{
-      margin-top:22px;
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
-      color:var(--muted); font-size:13px;
-      opacity:.95;
+      margin-top:18px;
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      color:var(--muted);font-size:13px;
     }
 
-    @media (max-width: 980px){
+    @media(max-width: 980px){
       .hero{grid-template-columns:1fr}
       h1{font-size:36px}
+      .heroPoints{grid-template-columns:1fr}
       .navlinks{display:none}
-    }
-    @media (max-width: 520px){
-      .brandName{display:none} /* encore plus clean sur mobile */
     }
   </style>
 </head>
 
 <body>
-  <div class="bg">
-    <div class="wrap">
+  <div class="wrap">
 
-      <!-- NAV -->
-      <div class="nav">
-        <div class="brand">
-          <div class="logo" aria-hidden="true">
-            <!-- mini icône voiture -->
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path d="M4 13.5V11.8c0-.6.2-1.2.6-1.6l2-2.3c.4-.5 1-.8 1.6-.8h7.6c.6 0 1.2.3 1.6.8l2 2.3c.4.4.6 1 .6 1.6v1.7" stroke="rgba(0,0,0,.85)" stroke-width="2" stroke-linecap="round"/>
-              <path d="M6.5 16.5h11" stroke="rgba(0,0,0,.85)" stroke-width="2" stroke-linecap="round"/>
-              <circle cx="7.5" cy="16.5" r="1.7" fill="rgba(0,0,0,.85)"/>
-              <circle cx="16.5" cy="16.5" r="1.7" fill="rgba(0,0,0,.85)"/>
-            </svg>
-          </div>
-          <div class="brandName">PMR Auto</div>
+    <!-- NAV -->
+    <div class="nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- icône simple -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M7 16h10" stroke="rgba(31,75,255,.85)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 14v-2.1c0-.6.2-1.2.6-1.6l2-2.2c.4-.5 1-.8 1.6-.8h7.6c.6 0 1.2.3 1.6.8l2 2.2c.4.4.6 1 .6 1.6V14" stroke="rgba(31,75,255,.85)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="7.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.85)"/>
+            <circle cx="16.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.85)"/>
+          </svg>
         </div>
-
-        <div class="navlinks">
-          <a href="#how">Comment ça marche</a>
-          <a href="#why">Avantages</a>
-          <a href="#pricing">Offre</a>
-        </div>
-
-        <div class="navcta">
-          <button class="btn" id="navGo">Souscrire</button>
-        </div>
+        <div>PMR Auto</div>
       </div>
 
-      <!-- HERO -->
-      <section class="hero" id="top">
-        <div class="heroLeft">
-          <span class="kicker">♿ Paris • Simplification PMR</span>
+      <div class="navlinks">
+        <a href="#how">Comment ça marche</a>
+        <a href="#why">Avantages</a>
+        <a href="#pricing">Offre</a>
+        <a href="#faq">FAQ</a>
+      </div>
 
-          <h1>Vous le faites une fois.<br/>Ensuite, c’est automatique.</h1>
+      <div class="navcta">
+        <button class="btn btnGhost" id="goPricing">Voir l’offre</button>
+        <button class="btn" id="goSubscribe">Souscrire</button>
+      </div>
+    </div>
 
+    <!-- HERO -->
+    <section class="hero" style="margin-top:16px">
+      <div class="heroLeft">
+        <div class="heroMedia">
+          <div class="heroBadgeRow">
+            <div class="pill">Paris</div>
+            <div class="pill">PMR</div>
+            <div class="pill">1 configuration</div>
+          </div>
+        </div>
+
+        <div class="heroBody">
+          <h1>Vous entrez votre plaque une fois.<br/>Ensuite, fini la manip PMR.</h1>
           <p class="sub">
-            À Paris, quand vous stationnez via une appli, vous devez souvent refaire la manipulation “PMR”
-            (sélection/activation de la carte handicapée) à chaque stationnement.
-            <b>PMR Auto</b> enlève cette friction :
-            <b>vous renseignez votre plaque une seule fois au moment de l’abonnement</b>,
-            puis <b>le statut PMR est appliqué automatiquement</b> lors de vos stationnements.
+            À Paris, lors d’un stationnement, vous devez souvent refaire l’étape “carte handicapée / PMR”.
+            PMR Auto simplifie le quotidien : <b>vous vous abonnez</b>, <b>vous saisissez votre plaque une seule fois</b>,
+            et <b>le statut PMR est appliqué automatiquement</b> lors de vos stationnements.
           </p>
 
-          <div class="bullets">
-            <div class="b">
-              <div class="bIcon">⚡</div>
-              <div>
-                <b>1 seule configuration</b>
-                <span>Plaque + abonnement, et c’est réglé. Vous ne revenez pas pour “re-rentrer” votre plaque.</span>
-              </div>
+          <div class="heroPoints">
+            <div class="mini">
+              <b>1 seule fois</b>
+              <span>Vous ne revenez pas pour retaper votre plaque. Configuration unique au moment de l’abonnement.</span>
             </div>
-
-            <div class="b">
-              <div class="bIcon">✅</div>
-              <div>
-                <b>Fini la manip PMR</b>
-                <span>Plus besoin de sélectionner/activer la carte handicapée à chaque stationnement.</span>
-              </div>
+            <div class="mini">
+              <b>Automatique</b>
+              <span>Le statut PMR est appliqué automatiquement : moins d’oubli, moins de stress.</span>
             </div>
-
-            <div class="b">
-              <div class="bIcon">🛡️</div>
-              <div>
-                <b>Simple & transparent</b>
-                <span>Abonnement mensuel. Annulation quand vous voulez. Paiement sécurisé via Stripe.</span>
-              </div>
+            <div class="mini">
+              <b>Simple</b>
+              <span>Abonnement mensuel, résiliation en 1 clic. Paiement sécurisé via Stripe.</span>
             </div>
           </div>
         </div>
-
-        <!-- CHECKOUT CARD -->
-        <div class="heroRight" id="pricing">
-          <div class="priceRow">
-            <div>
-              <div class="title">Abonnement PMR Auto</div>
-              <div class="muted">Renseignez votre plaque une fois • Activation rapide</div>
-            </div>
-            <span class="tag">Mensuel</span>
-          </div>
-
-          <div>
-            <div class="price">9,99€</div>
-            <div class="per">par mois • annulable à tout moment</div>
-          </div>
-
-          <div class="divider"></div>
-
-          <div>
-            <label for="plate">Plaque d’immatriculation (une seule fois)</label>
-            <input id="plate" placeholder="AA-123-AA" autocomplete="off" />
-            <div class="muted" style="margin-top:8px">
-              On associe votre véhicule à l’activation automatique du statut PMR.
-            </div>
-          </div>
-
-          <button class="btn btnBig" id="subscribeBtn">Souscrire à l’abonnement</button>
-
-          <ul class="checks">
-            <li><span class="tick">✓</span><span>Vous renseignez la plaque une seule fois</span></li>
-            <li><span class="tick">✓</span><span>Le statut PMR est appliqué automatiquement ensuite</span></li>
-            <li><span class="tick">✓</span><span>Paiement Stripe + résiliation simple</span></li>
-          </ul>
-
-          <div class="notice">
-            Important : PMR Auto ne remplace pas les règles locales de stationnement.
-            L’utilisateur doit disposer d’une carte / autorisation PMR valide.
-          </div>
-        </div>
-      </section>
-
-      <!-- HOW -->
-      <section class="section" id="how">
-        <div class="secTitle">
-          <h2>Comment ça marche (vraiment)</h2>
-          <span class="tag">3 étapes</span>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="num">1</div>
-            <div>
-              <b>Vous souscrivez + vous entrez votre plaque (une seule fois)</b>
-              <div class="muted">Vous configurez votre véhicule au moment de l’abonnement. Après ça, vous n’avez plus à revenir sur cette page.</div>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="num">2</div>
-            <div>
-              <b>On associe votre véhicule au statut PMR</b>
-              <div class="muted">Votre plaque est liée à l’activation automatique du statut PMR pour vos stationnements (dans le cadre des règles applicables).</div>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="num">3</div>
-            <div>
-              <b>Quand vous stationnez, la manip PMR n’est plus à refaire</b>
-              <div class="muted">Vous évitez les oublis et la répétition : le statut PMR est appliqué automatiquement sur vos stationnements.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- WHY -->
-      <section class="section" id="why">
-        <div class="secTitle">
-          <h2>Avantages</h2>
-          <span class="tag">Pensé pour Paris</span>
-        </div>
-
-        <div class="grid2">
-          <div class="card">
-            <b>Moins de stress</b>
-            <div class="muted">Vous ne vous demandez plus “est-ce que j’ai bien activé la carte PMR ?”.</div>
-          </div>
-          <div class="card">
-            <b>Gain de temps</b>
-            <div class="muted">Vous supprimez les étapes répétitives à chaque stationnement.</div>
-          </div>
-          <div class="card">
-            <b>Une seule plaque à renseigner</b>
-            <div class="muted">Vous ne revenez pas sur le site pour retaper votre immatriculation.</div>
-          </div>
-          <div class="card">
-            <b>Abonnement clair</b>
-            <div class="muted">Mensuel, annulable à tout moment. Pas de piège.</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ -->
-      <section class="section" id="faq">
-        <div class="secTitle">
-          <h2>Questions fréquentes</h2>
-          <span class="tag">FAQ</span>
-        </div>
-
-        <div class="faq">
-          <details>
-            <summary>Je dois entrer ma plaque à chaque fois ?</summary>
-            <p>Non. Vous la saisissez une seule fois au moment de l’abonnement. Ensuite, vous n’avez plus besoin de revenir sur la page pour la retaper.</p>
-          </details>
-
-          <details>
-            <summary>C’est uniquement pour Paris ?</summary>
-            <p>La solution est pensée pour Paris car c’est là que la friction est la plus fréquente. Si vous étendez à d’autres villes, vous pourrez l’indiquer ici.</p>
-          </details>
-
-          <details>
-            <summary>Et si je change de voiture ?</summary>
-            <p>Vous pourrez modifier la plaque (à ajouter ensuite via un petit formulaire “changer de plaque”).</p>
-          </details>
-
-          <details>
-            <summary>Est-ce légal / conforme ?</summary>
-            <p>PMR Auto ne remplace pas les règles locales : vous devez disposer d’une carte / autorisation PMR valide et respecter les conditions applicables.</p>
-          </details>
-        </div>
-      </section>
-
-      <div class="foot">
-        <div>© <span id="year"></span> PMR Auto</div>
-        <div>CGU • Confidentialité • Support</div>
       </div>
 
+      <!-- CHECKOUT -->
+      <aside class="panel" id="pricing">
+        <div class="panelTop">
+          <div>
+            <div class="title">Abonnement PMR Auto</div>
+            <div class="muted">Activation rapide • Support si besoin</div>
+          </div>
+          <div class="tag">Mensuel</div>
+        </div>
+
+        <div>
+          <div class="price">9,99€</div>
+          <div class="per">par mois • annulable à tout moment</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div>
+          <label for="plate">Votre plaque (une seule fois)</label>
+          <input id="plate" placeholder="AA-123-AA" autocomplete="off" />
+          <div class="muted" style="margin-top:8px">
+            On associe votre véhicule à l’activation automatique du statut PMR.
+          </div>
+        </div>
+
+        <button class="btn btnBig" id="subscribeBtn">Souscrire & activer</button>
+
+        <ul class="checks">
+          <li><span class="tick">✓</span><span>Configuration unique (plaque)</span></li>
+          <li><span class="tick">✓</span><span>Statut PMR appliqué automatiquement ensuite</span></li>
+          <li><span class="tick">✓</span><span>Annulation simple</span></li>
+        </ul>
+
+        <div class="note">
+          Important : PMR Auto ne remplace pas les règles locales de stationnement.
+          L’utilisateur doit disposer d’une carte / autorisation PMR valide.
+        </div>
+      </aside>
+    </section>
+
+    <!-- HOW -->
+    <section class="section" id="how">
+      <div class="secTitle">
+        <h2>Comment ça marche</h2>
+        <div class="tag">Simple & concret</div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <b>Vous vous abonnez et saisissez votre plaque</b>
+            <div class="muted">Vous le faites une seule fois. Ensuite, vous n’avez plus besoin de revenir sur le site.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <b>Votre véhicule est associé au statut PMR</b>
+            <div class="muted">La plaque sert à appliquer automatiquement le statut PMR lors de vos stationnements.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <b>Quand vous stationnez, la manipulation PMR n’est plus à refaire</b>
+            <div class="muted">Moins d’étapes, moins d’oubli. Le statut PMR est appliqué automatiquement.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY -->
+    <section class="section" id="why">
+      <div class="secTitle">
+        <h2>Avantages</h2>
+        <div class="tag">Pensé pour Paris</div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <b>Moins de stress</b>
+          <p>Vous ne vous demandez plus si vous avez bien activé l’option PMR avant de valider.</p>
+        </div>
+        <div class="card">
+          <b>Gain de temps</b>
+          <p>Vous éliminez les étapes répétitives à chaque stationnement.</p>
+        </div>
+        <div class="card">
+          <b>Configuration unique</b>
+          <p>Vous entrez votre plaque une seule fois au moment de l’abonnement.</p>
+        </div>
+        <div class="card">
+          <b>Abonnement clair</b>
+          <p>Mensuel, annulable à tout moment. Pas de piège.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="secTitle">
+        <h2>FAQ</h2>
+        <div class="tag">Questions</div>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>Je dois entrer ma plaque à chaque stationnement ?</summary>
+          <p>Non. Vous la saisissez une seule fois lors de l’abonnement. Ensuite, vous n’avez plus besoin de revenir sur le site pour la retaper.</p>
+        </details>
+
+        <details>
+          <summary>Est-ce que je dois quand même respecter les règles de stationnement ?</summary>
+          <p>Oui. PMR Auto ne remplace pas les règles locales : vous devez disposer d’une carte / autorisation PMR valide et respecter les conditions applicables.</p>
+        </details>
+
+        <details>
+          <summary>Et si je change de voiture ?</summary>
+          <p>On pourra ajouter ensuite une option “changer de plaque” (ou vous passez par le support dans un premier temps).</p>
+        </details>
+
+        <details>
+          <summary>Comment j’annule ?</summary>
+          <p>Vous pouvez annuler à tout moment. C’est un abonnement mensuel, sans engagement long.</p>
+        </details>
+      </div>
+    </section>
+
+    <div class="foot">
+      <div>© <span id="year"></span> PMR Auto</div>
+      <div>CGU • Confidentialité • Support</div>
     </div>
+
   </div>
 
   <script>
@@ -496,13 +491,18 @@
         alert("Merci d’entrer votre plaque 🙂");
         return;
       }
-      // MVP : stocke localement. Si tu veux la récupérer côté serveur -> webhook Stripe + backend ensuite.
       localStorage.setItem("plate", plate);
       window.location.href = STRIPE_LINK;
     }
 
     document.getElementById("subscribeBtn").addEventListener("click", goCheckout);
-    document.getElementById("navGo").addEventListener("click", () => {
+
+    document.getElementById("goPricing").addEventListener("click", () => {
+      document.getElementById("pricing").scrollIntoView({behavior:"smooth", block:"start"});
+      setTimeout(() => document.getElementById("plate").focus(), 350);
+    });
+
+    document.getElementById("goSubscribe").addEventListener("click", () => {
       document.getElementById("pricing").scrollIntoView({behavior:"smooth", block:"start"});
       setTimeout(() => document.getElementById("plate").focus(), 350);
     });
