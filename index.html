@@ -2,753 +2,1537 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PMR Auto — Stationnement PMR simplifié à Paris</title>
-  <meta name="description" content="Vous entrez votre plaque une seule fois en vous abonnant. Ensuite, le statut PMR est appliqué automatiquement lors de vos stationnements à Paris." />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Vmaniche automatise la prise en compte de votre carte handicapé dans PayByPhone pour réduire le risque d'amendes par oubli." />
+  <title>Vmaniche — Évitez les amendes par oubli</title>
 
   <style>
+    /* =========================
+      Vmaniche — One-page CRO
+      - Mobile-first
+      - No external deps
+      - Premium Framer/Lovable vibe
+    ========================== */
+
     :root{
-      --bg:#f6f7fb;
-      --bg2:#eef1f9;
-      --card:#ffffff;
-      --text:#0b1220;
-      --muted:#5a647a;
-      --muted2:#77819a;
-      --line: rgba(15,23,42,.10);
-
-      --primary:#1f4bff;
-      --primary2:#1231a8;
-      --primarySoft: rgba(31,75,255,.10);
-
-      --success:#12b76a;
-      --warn:#ff8a00;
-
-      --shadow: 0 28px 70px rgba(15,23,42,.10);
-      --shadow2: 0 12px 30px rgba(15,23,42,.10);
-
-      --r: 18px;
-      --r2: 22px;
-
-      --max: 1180px;
+      --bg: #070A12;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --muted2: rgba(255,255,255,.58);
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --shadowSoft: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radiusLg: 28px;
+      --brand1: #7C3AED; /* violet */
+      --brand2: #22D3EE; /* cyan */
+      --brand3: #F59E0B; /* amber */
+      --ok: #34D399;
+      --warn: #FBBF24;
+      --bad: #FB7185;
+      --focus: rgba(34,211,238,.35);
+      --max: 1120px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
 
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;background:var(--bg);color:var(--text)}
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max);margin:0 auto;padding:18px 18px 90px}
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1000px 600px at 15% -10%, rgba(124,58,237,.28), transparent 60%),
+        radial-gradient(900px 520px at 95% 0%, rgba(34,211,238,.22), transparent 55%),
+        radial-gradient(900px 520px at 50% 110%, rgba(245,158,11,.16), transparent 60%),
+        linear-gradient(180deg, #050711, #070A12 30%, #060913);
+      overflow-x:hidden;
+    }
 
-    /* NAV */
+    a{ color:inherit; text-decoration:none; }
+    button, input{
+      font-family: inherit;
+    }
+
+    /* Subtle grain for premium feel */
+    .grain{
+      pointer-events:none;
+      position:fixed; inset:0;
+      background-image:
+        radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 3px 3px;
+      opacity:.35;
+      mix-blend-mode: overlay;
+      z-index:0;
+    }
+
+    /* Layout */
+    .wrap{ position:relative; z-index:1; }
+    .container{
+      width: min(var(--max), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(7,10,18,.62);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .headerInner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 12px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 160px;
+    }
+    .logoDot{
+      width: 12px; height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 0 0 5px rgba(124,58,237,.12), 0 0 30px rgba(34,211,238,.16);
+    }
+    .brandName{
+      font-weight: 850;
+      letter-spacing: .2px;
+      font-size: 16px;
+    }
     .nav{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.82);
-      backdrop-filter: blur(10px);
-      box-shadow: var(--shadow2);
-      position:sticky; top:14px; z-index:30;
+      display:none;
+      gap: 18px;
+      align-items:center;
+      color: var(--muted);
+      font-size: 14px;
     }
-    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.01em}
-    .logo{
-      width:36px;height:36px;border-radius:14px;
-      background: radial-gradient(120% 120% at 20% 20%, rgba(31,75,255,.22), rgba(31,75,255,.02));
-      border:1px solid rgba(31,75,255,.25);
-      display:grid;place-items:center;
+    .nav a{
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background .2s ease, color .2s ease;
     }
-    .navlinks{display:flex;gap:16px;color:var(--muted);font-size:14px;align-items:center}
-    .navlinks a{opacity:.95}
-    .navcta{display:flex;gap:10px;align-items:center}
+    .nav a:hover{
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+    }
+
+    /* Buttons */
     .btn{
-      border:0;cursor:pointer;font-weight:900;
-      padding:10px 14px;border-radius:999px;
-      background:var(--primary); color:#fff;
-      box-shadow: 0 12px 26px rgba(31,75,255,.22);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+      user-select:none;
       white-space:nowrap;
     }
-    .btn:hover{background:var(--primary2)}
+    .btn:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.085);
+      border-color: rgba(255,255,255,.16);
+      box-shadow: var(--shadowSoft);
+    }
+    .btn:active{ transform: translateY(0px); }
+    .btnPrimary{
+      border: none;
+      background: linear-gradient(135deg, var(--brand1), var(--brand2));
+      box-shadow: 0 16px 45px rgba(124,58,237,.18), 0 12px 35px rgba(34,211,238,.14);
+    }
+    .btnPrimary:hover{
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(34,211,238,.95));
+    }
+    .btnPrimary:focus-visible{
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
     .btnGhost{
-      border:1px solid var(--line);
-      background:#fff;color:var(--text);
-      box-shadow:none;
-      font-weight:900;
+      background: rgba(255,255,255,.04);
     }
-    .btnSmall{padding:9px 12px;font-size:14px}
-
-    /* HERO (big visual) */
-    .hero{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:16px;
-      align-items:stretch;
+    .btnSmall{
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
     }
 
-    .heroVisual{
-      border:1px solid var(--line);
-      border-radius: var(--r2);
-      overflow:hidden;
-      background: #0b1220;
-      box-shadow: var(--shadow);
-      position:relative;
-      min-height: 560px;
-    }
-
-    /* Better-looking image: street/parking/Paris vibe */
-    .heroImg{
-      position:absolute; inset:0;
-      background:
-        linear-gradient(180deg, rgba(11,18,32,.15) 0%, rgba(11,18,32,.80) 78%, rgba(11,18,32,.92) 100%),
-        url("https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=1800&q=85");
-      background-size:cover;
-      background-position:center;
-      transform: scale(1.02);
-      filter: saturate(1.05) contrast(1.05);
-    }
-
-    .heroGlow{
-      position:absolute; inset:-60px;
-      background:
-        radial-gradient(500px 280px at 18% 18%, rgba(31,75,255,.40), transparent 60%),
-        radial-gradient(520px 320px at 88% 22%, rgba(18,183,106,.22), transparent 60%),
-        radial-gradient(560px 340px at 55% 90%, rgba(255,138,0,.18), transparent 60%);
-      pointer-events:none;
-      mix-blend-mode: screen;
-      opacity:.8;
-    }
-
-    .heroContent{
-      position:relative;
-      padding:26px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      height:100%;
-    }
-
-    .heroTopRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    /* Typography */
+    .kicker{
+      display:inline-flex;
       align-items:center;
-    }
-    .pill{
-      padding:9px 12px;
-      border-radius:999px;
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.18);
-      color: rgba(255,255,255,.92);
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.2px;
-      backdrop-filter: blur(8px);
-    }
-    .pillLight{
-      background: rgba(255,255,255,.85);
-      border:1px solid rgba(255,255,255,.50);
-      color:#0b1220;
-    }
-
-    h1{
-      margin:0;
-      font-size:50px;
-      line-height:1.03;
-      letter-spacing:-.04em;
-      color:#fff;
-      max-width: 18ch;
-    }
-    .heroSub{
-      margin:0;
-      color: rgba(255,255,255,.78);
-      font-size:17px;
-      line-height:1.65;
-      max-width: 70ch;
-    }
-
-    .heroActions{
-      display:flex;
       gap:10px;
-      flex-wrap:wrap;
-      margin-top:4px;
-    }
-    .btnHero{
-      border-radius:14px;
-      padding:12px 14px;
-      font-size:15px;
-    }
-    .btnHeroGhost{
-      background: rgba(255,255,255,.10);
-      border:1px solid rgba(255,255,255,.22);
-      color:#fff;
-      box-shadow:none;
-    }
-
-    .heroCards{
-      margin-top:auto;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-    }
-    .floatCard{
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.10);
-      border-radius:18px;
-      padding:14px;
-      backdrop-filter: blur(10px);
-    }
-    .floatCard b{display:block; color:#fff; margin-bottom:6px}
-    .floatCard span{display:block; color:rgba(255,255,255,.78); font-size:13.5px; line-height:1.45}
-
-    /* Right pricing panel */
-    .panel{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius: var(--r2);
-      box-shadow: var(--shadow);
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      min-height: 560px;
-    }
-    .panelTop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-    .title{font-weight:950;font-size:18px;letter-spacing:-.01em}
-    .muted{color:var(--muted);font-size:13.5px;line-height:1.45}
-    .price{
-      font-size:44px;font-weight:950;letter-spacing:-.04em;
-    }
-    .per{color:var(--muted);font-size:13px;margin-top:3px}
-    .divider{height:1px;background:var(--line)}
-    label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:800}
-    input{
-      width:100%;
-      padding:14px 14px;
-      border-radius:14px;
-      border:1px solid rgba(15,23,42,.14);
-      background:#fff;
-      font-size:16px;
-      outline:none;
-    }
-    input:focus{
-      border-color: rgba(31,75,255,.55);
-      box-shadow: 0 0 0 4px rgba(31,75,255,.12);
-    }
-    .btnBig{padding:14px 16px;border-radius:14px;font-size:16px}
-    .checks{display:grid;gap:10px;margin:0;padding:0;list-style:none}
-    .checks li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:14px}
-    .tick{
-      width:18px;height:18px;border-radius:6px;
-      display:grid;place-items:center;
-      background: rgba(18,183,106,.12);
-      border:1px solid rgba(18,183,106,.25);
-      color: var(--success);
-      font-weight:900;
-      flex:0 0 18px;
-      margin-top:2px;
-    }
-    .note{
-      border:1px solid var(--line);
-      background:#fbfbfe;
-      border-radius:14px;
-      padding:10px 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
       color: var(--muted);
-      font-size:12.5px;
-      line-height:1.45;
+      font-size: 13px;
     }
-
-    .trustRow{
-      display:grid;
-      grid-template-columns: repeat(3,1fr);
-      gap:10px;
-      margin-top:auto;
+    .kicker b{ color: var(--text); font-weight: 750; }
+    h1{
+      margin: 16px 0 10px;
+      font-size: 40px;
+      line-height: 1.04;
+      letter-spacing: -1.2px;
     }
-    .trust{
-      border:1px solid var(--line);
-      background:#fbfbfe;
-      border-radius:14px;
-      padding:10px 12px;
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.35;
+    h2{
+      margin: 0 0 10px;
+      font-size: 26px;
+      line-height: 1.18;
+      letter-spacing: -.5px;
     }
-    .trust b{color:var(--text)}
+    p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 15.5px;
+    }
+    .fine{
+      color: var(--muted2);
+      font-size: 12.5px;
+      line-height: 1.4;
+    }
 
     /* Sections */
-    .section{
-      margin-top:18px;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius: var(--r2);
-      box-shadow: var(--shadow2);
-      padding:18px;
+    section{
+      padding: 56px 0;
     }
-    .secTitle{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      margin-bottom:12px;
+    .hero{
+      padding: 36px 0 18px;
     }
-    .secTitle h2{margin:0;font-size:18px;letter-spacing:-.01em}
-    .tag{
-      font-size:12px;font-weight:900;color:var(--primary2);
-      background: var(--primarySoft);
-      border:1px solid rgba(31,75,255,.16);
-      padding:7px 10px;border-radius:999px;
-      white-space:nowrap;
+    .grid{
+      display:grid;
+      gap: 16px;
     }
-    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
     .card{
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-      background:#fbfbfe;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
     }
-    .card b{display:block;margin-bottom:6px}
-    .card p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}
+    .cardPad{ padding: 18px; }
+    .cardPadLg{ padding: 22px; }
+
+    /* Hero layout */
+    .heroGrid{
+      display:grid;
+      gap: 16px;
+      align-items: stretch;
+    }
+    .heroLeft{
+      padding: 18px 0 6px;
+    }
+    .heroRight{
+      position:relative;
+      overflow:hidden;
+    }
+    .heroRight::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(420px 240px at 20% 10%, rgba(124,58,237,.35), transparent 55%),
+        radial-gradient(520px 280px at 80% 30%, rgba(34,211,238,.25), transparent 60%),
+        radial-gradient(420px 260px at 35% 90%, rgba(245,158,11,.18), transparent 58%);
+      opacity:.9;
+      filter: blur(1px);
+    }
+    .heroRight > .inner{
+      position:relative;
+      padding: 18px;
+    }
+
+    .heroBullets{
+      display:grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .pillRow{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 8px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .dot{
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.28);
+    }
+    .dot.ok{ background: rgba(52,211,153,.85); }
+    .dot.safe{ background: rgba(34,211,238,.85); }
+    .dot.fast{ background: rgba(124,58,237,.9); }
+
+    .ctaRow{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .ctaUnder{
+      margin-top: 8px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--muted2);
+      font-size: 12.5px;
+    }
+
+    /* Problem scene */
+    .scene{
+      display:grid;
+      gap: 12px;
+    }
+    .sceneTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .tag{
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+    }
+    .badgeBad{
+      color: rgba(251,113,133,.95);
+      border-color: rgba(251,113,133,.25);
+      background: rgba(251,113,133,.08);
+    }
+
+    .timeline{
+      margin-top: 10px;
+      display:grid;
+      gap: 10px;
+    }
+    .stepRow{
+      display:flex;
+      gap: 12px;
+      align-items:flex-start;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.16);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .stepIcon{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      flex: 0 0 auto;
+    }
+    .stepIcon svg{ opacity:.9; }
 
     /* Before/After */
-    .ba{
+    .twoCol{
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
+      gap: 14px;
     }
-    .baBox{
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:#fbfbfe;
-      padding:16px;
-      overflow:hidden;
-      position:relative;
+    .baCard h3{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: -.2px;
     }
-    .baHead{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom:10px;
+    .list{
+      display:grid;
+      gap: 10px;
+      margin-top: 10px;
     }
-    .badge{
-      font-size:12px; font-weight:900;
-      padding:7px 10px; border-radius:999px;
-      background: rgba(255,138,0,.10);
-      border:1px solid rgba(255,138,0,.18);
-      color:#8a4b00;
-      white-space:nowrap;
+    .li{
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,.14);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
     }
-    .badgeOk{
-      background: rgba(18,183,106,.10);
-      border:1px solid rgba(18,183,106,.18);
-      color:#0b5a35;
+    .li b{ color: var(--text); }
+    .li .mark{
+      width: 20px; height: 20px;
+      border-radius: 999px;
+      display:flex; align-items:center; justify-content:center;
+      flex: 0 0 auto;
+      margin-top: 2px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
     }
-    .baList{margin:0;padding-left:18px;color:var(--muted);line-height:1.7;font-size:14px}
-    .baList li{margin:6px 0}
+    .li.ok .mark{
+      background: rgba(52,211,153,.10);
+      border-color: rgba(52,211,153,.25);
+    }
+    .li.bad .mark{
+      background: rgba(251,113,133,.10);
+      border-color: rgba(251,113,133,.25);
+    }
 
-    /* Steps */
-    .steps{display:grid;gap:12px}
-    .step{
-      display:flex;gap:12px;align-items:flex-start;
-      border:1px solid var(--line); background:#fbfbfe;
-      border-radius:18px; padding:16px;
+    /* How it works */
+    .steps{
+      display:grid;
+      gap: 12px;
     }
-    .num{
-      width:32px;height:32px;border-radius:14px;
-      background: var(--primarySoft);
-      border:1px solid rgba(31,75,255,.18);
-      display:grid;place-items:center;
-      font-weight:950;color:var(--primary2);
-      flex:0 0 32px;
-      margin-top:1px;
+    .howItem h3{
+      margin: 0 0 6px;
+      font-size: 16px;
     }
-    .step b{display:block;margin-bottom:4px}
+
+    /* Benefits */
+    .benefits{
+      display:grid;
+      gap: 12px;
+    }
+    .benefit h3{ margin:0 0 6px; font-size:16px; }
+    .benefit p{ margin:0; }
+
+    /* Trust */
+    .trustGrid{
+      display:grid;
+      gap: 12px;
+    }
+    .trustItem h3{ margin:0 0 6px; font-size:16px; }
+
+    /* Pricing block integrated */
+    .pricingWrap{
+      display:grid;
+      gap: 14px;
+      align-items: start;
+    }
+    .price{
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin: 6px 0 10px;
+    }
+    .price small{
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+    .included{
+      display:grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .included .li{ background: rgba(255,255,255,.04); }
+    .noteBox{
+      margin-top: 12px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    .noteBox b{ color: var(--text); }
 
     /* Testimonials */
-    .testGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .testimonials{
+      display:grid;
+      gap: 12px;
+    }
     .quote{
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:#fbfbfe;
-      padding:16px;
+      padding: 18px;
     }
-    .quote p{margin:0;color:var(--muted);line-height:1.7;font-size:14px}
-    .who{margin-top:12px;display:flex;gap:10px;align-items:center}
-    .avatar{
-      width:34px;height:34px;border-radius:14px;
-      background: radial-gradient(120% 120% at 20% 20%, rgba(31,75,255,.20), rgba(255,255,255,0));
-      border:1px solid rgba(31,75,255,.18);
+    .quote p{
+      color: rgba(255,255,255,.82);
+      font-size: 15.5px;
     }
-    .who b{display:block}
-    .who span{display:block;color:var(--muted2);font-size:12.5px}
+    .who{
+      margin-top: 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      color: var(--muted2);
+      font-size: 12.5px;
+    }
 
-    /* FAQ */
-    .faq{display:grid;gap:10px}
-    details{
-      border:1px solid var(--line);
-      background:#fbfbfe;
-      border-radius:16px;
-      padding:12px 14px;
+    /* FAQ accordion */
+    .faq{
+      display:grid;
+      gap: 10px;
     }
-    summary{cursor:pointer;font-weight:950}
-    details p{margin:10px 0 0;color:var(--muted);line-height:1.65;font-size:14px}
+    details{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 0;
+      overflow:hidden;
+      transition: transform .15s ease;
+    }
+    details:hover{ transform: translateY(-1px); }
+    summary{
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      color: rgba(255,255,255,.88);
+      font-weight: 650;
+      font-size: 14.5px;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .chev{
+      width: 26px; height: 26px;
+      border-radius: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.14);
+      transition: transform .2s ease;
+      flex: 0 0 auto;
+    }
+    details[open] .chev{ transform: rotate(180deg); }
+    .faqBody{
+      padding: 0 14px 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .faqBody b{ color: var(--text); }
+
+    /* Final CTA */
+    .final{
+      padding-bottom: 70px;
+    }
+    .finalBox{
+      position:relative;
+      overflow:hidden;
+    }
+    .finalBox::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 260px at 20% 20%, rgba(124,58,237,.32), transparent 60%),
+        radial-gradient(520px 260px at 80% 35%, rgba(34,211,238,.24), transparent 62%);
+      opacity:.9;
+    }
+    .finalBox > .inner{
+      position:relative;
+      padding: 20px;
+    }
+
+    /* Modal */
+    .modalOverlay{
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .modalOverlay[aria-hidden="false"]{ display:flex; }
+
+    .modal{
+      width: min(560px, 100%);
+      border-radius: 22px;
+      background: rgba(10,12,22,.86);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 26px 90px rgba(0,0,0,.55);
+      overflow:hidden;
+      transform: translateY(10px) scale(.98);
+      opacity: 0;
+      transition: transform .22s ease, opacity .22s ease;
+    }
+    .modalOverlay[aria-hidden="false"] .modal{
+      transform: translateY(0px) scale(1);
+      opacity: 1;
+    }
+    .modalHeader{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
+    }
+    .modalHeader h3{
+      margin:0;
+      font-size: 16px;
+      letter-spacing: -.2px;
+    }
+    .modalHeader p{
+      margin: 6px 0 0;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+    .closeBtn{
+      width: 36px; height: 36px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition: transform .15s ease, background .2s ease;
+      flex: 0 0 auto;
+    }
+    .closeBtn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); }
+    .closeBtn:active{ transform: translateY(0px); }
+
+    .modalBody{ padding: 16px; }
+    .formGrid{ display:grid; gap: 12px; }
+    .field{
+      display:grid;
+      gap: 7px;
+    }
+    label{
+      font-size: 12.5px;
+      color: var(--muted2);
+      font-weight: 600;
+    }
+    input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      outline:none;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    input:focus{
+      border-color: rgba(34,211,238,.35);
+      box-shadow: 0 0 0 4px rgba(34,211,238,.12);
+      background: rgba(255,255,255,.06);
+    }
+    .row2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .modalFooter{
+      padding: 14px 16px 16px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      display:grid;
+      gap: 10px;
+    }
+    .success{
+      display:none;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(52,211,153,.25);
+      background: rgba(52,211,153,.10);
+      color: rgba(255,255,255,.88);
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    .success[aria-hidden="false"]{ display:block; }
+
+    /* Small helper chip */
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.16);
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.45;
+    }
+    .chip b{ color: var(--text); }
 
     /* Footer */
-    .foot{
-      margin-top:18px;
-      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
-      color:var(--muted);font-size:13px;
+    footer{
+      padding: 28px 0 38px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted2);
+      font-size: 12.5px;
+    }
+    .footRow{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      align-items:flex-start;
+      justify-content:space-between;
+    }
+    .footLinks{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      color: var(--muted2);
+    }
+    .footLinks a{
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.03);
     }
 
     /* Responsive */
-    @media(max-width: 1000px){
-      .hero{grid-template-columns:1fr}
-      .heroVisual,.panel{min-height:auto}
-      h1{font-size:40px}
-      .heroCards{grid-template-columns:1fr}
-      .testGrid{grid-template-columns:1fr}
-      .grid3{grid-template-columns:1fr}
-      .grid2{grid-template-columns:1fr}
-      .ba{grid-template-columns:1fr}
-      .navlinks{display:none}
-      .trustRow{grid-template-columns:1fr}
+    @media (min-width: 860px){
+      h1{ font-size: 56px; }
+      p{ font-size: 16px; }
+      .nav{ display:flex; }
+      .heroGrid{ grid-template-columns: 1.12fr .88fr; gap: 18px; }
+      .ctaRow{
+        flex-direction: row;
+        align-items:center;
+      }
+      .ctaRow .btn{ padding: 13px 16px; }
+      .scene{ grid-template-columns: 1.1fr .9fr; align-items:start; }
+      .twoCol{ grid-template-columns: 1fr 1fr; }
+      .steps{ grid-template-columns: 1fr 1fr 1fr; }
+      .benefits{ grid-template-columns: 1fr 1fr 1fr; }
+      .trustGrid{ grid-template-columns: 1fr 1fr 1fr; }
+      .pricingWrap{ grid-template-columns: 1.1fr .9fr; }
+      .testimonials{ grid-template-columns: 1fr 1fr 1fr; }
+      .footRow{ flex-direction:row; align-items:center; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{ transition:none !important; animation:none !important; }
+      html{ scroll-behavior:auto; }
     }
   </style>
 </head>
 
 <body>
+  <div class="grain" aria-hidden="true"></div>
+
   <div class="wrap">
+    <!-- Sticky Header -->
+    <header class="header" role="banner">
+      <div class="container">
+        <div class="headerInner">
+          <a class="brand" href="#top" aria-label="Aller en haut">
+            <span class="logoDot" aria-hidden="true"></span>
+            <span class="brandName">Vmaniche</span>
+          </a>
 
-    <!-- NAV -->
-    <div class="nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M7 16h10" stroke="rgba(31,75,255,.90)" stroke-width="2" stroke-linecap="round"/>
-            <path d="M4 14v-2.1c0-.6.2-1.2.6-1.6l2-2.2c.4-.5 1-.8 1.6-.8h7.6c.6 0 1.2.3 1.6.8l2 2.2c.4.4.6 1 .6 1.6V14" stroke="rgba(31,75,255,.90)" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="7.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.90)"/>
-            <circle cx="16.5" cy="16.5" r="1.7" fill="rgba(31,75,255,.90)"/>
-          </svg>
+          <nav class="nav" aria-label="Navigation">
+            <a href="#probleme">Problème</a>
+            <a href="#avant-apres">Avant / Après</a>
+            <a href="#comment">Comment ça marche</a>
+            <a href="#abonnement">Abonnement</a>
+            <a href="#faq">FAQ</a>
+          </nav>
+
+          <button class="btn btnPrimary btnSmall js-open" type="button" aria-haspopup="dialog">
+            Activer — 30€/mois
+          </button>
         </div>
-        <div>PMR Auto</div>
       </div>
-
-      <div class="navlinks">
-        <a href="#how">Comment ça marche</a>
-        <a href="#avantapres">Avant / Après</a>
-        <a href="#why">Avantages</a>
-        <a href="#temoignages">Témoignages</a>
-        <a href="#faq">FAQ</a>
-      </div>
-
-      <div class="navcta">
-        <button class="btn btnGhost btnSmall" id="goPricing">Voir l’offre</button>
-        <button class="btn btnSmall" id="goSubscribe">Souscrire</button>
-      </div>
-    </div>
+    </header>
 
     <!-- HERO -->
-    <section class="hero" style="margin-top:16px">
-      <div class="heroVisual">
-        <div class="heroImg"></div>
-        <div class="heroGlow"></div>
+    <main id="top">
+      <section class="hero">
+        <div class="container">
+          <div class="heroGrid">
+            <div class="heroLeft">
+              <div class="kicker">
+                <span class="logoDot" aria-hidden="true" style="width:10px;height:10px; box-shadow:none;"></span>
+                <span><b>Stop aux amendes</b> causées par un simple oubli</span>
+              </div>
 
-        <div class="heroContent">
-          <div class="heroTopRow">
-            <div class="pill">Paris</div>
-            <div class="pill">PMR</div>
-            <div class="pill pillLight">1 configuration</div>
-          </div>
+              <h1>
+                Votre carte handicapé prise en compte <span style="background: linear-gradient(135deg, var(--brand2), var(--brand1)); -webkit-background-clip:text; background-clip:text; color:transparent;">sans y penser</span>.
+              </h1>
 
-          <h1>Vous entrez votre plaque une fois.<br/>Ensuite, fini la manip PMR.</h1>
+              <p>
+                Vmaniche automatise l’étape que beaucoup oublient : <b>activer / rattacher</b> la carte handicapé dans PayByPhone
+                au moment de stationner. Vous gardez le contrôle — nous réduisons le risque d’oubli.
+              </p>
 
-          <p class="heroSub">
-            À Paris, lors d’un stationnement, vous devez souvent refaire l’étape “carte handicapée / PMR”
-            sur l’application de stationnement. PMR Auto enlève cette friction :
-            <b>abonnement mensuel</b> + <b>plaque une seule fois</b>, puis
-            <b>le statut PMR est appliqué automatiquement</b> lors de vos stationnements.
-          </p>
+              <div class="pillRow" aria-label="Réassurance">
+                <span class="pill"><span class="dot fast"></span> Activation 2 min</span>
+                <span class="pill"><span class="dot safe"></span> Paiement sécurisé</span>
+                <span class="pill"><span class="dot ok"></span> Annulable à tout moment</span>
+              </div>
 
-          <div class="heroActions">
-            <button class="btn btnHero" id="heroCta">Souscrire & activer</button>
-            <button class="btn btnHero btnHeroGhost" id="heroLearn">Comprendre le fonctionnement</button>
-          </div>
+              <div class="ctaRow">
+                <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+                  Activer maintenant — 30€/mois
+                </button>
+                <a class="btn btnGhost" href="#abonnement">
+                  Voir ce qui est inclus
+                </a>
+              </div>
 
-          <div class="heroCards">
-            <div class="floatCard">
-              <b>Configuration unique</b>
-              <span>Vous ne revenez pas retaper votre plaque : c’est une seule fois à l’inscription.</span>
+              <div class="ctaUnder">
+                <span>Microcopy : abonnement mensuel, résiliation en 2 clics.</span>
+                <span>Pas un service de paiement à votre place.</span>
+              </div>
             </div>
-            <div class="floatCard">
-              <b>Moins d’oubli</b>
-              <span>Le statut PMR est appliqué automatiquement : moins de stress avant de valider.</span>
+
+            <aside class="card heroRight" aria-label="Aperçu">
+              <div class="inner">
+                <div class="sceneTop">
+                  <div>
+                    <h2 style="margin:0 0 6px; font-size:18px;">Le piège le plus fréquent</h2>
+                    <p style="margin:0; color: rgba(255,255,255,.72); font-size:14px;">
+                      Tout est ok… jusqu’au moment où la carte n’est pas prise en compte.
+                    </p>
+                  </div>
+                  <span class="tag badgeBad">Oubli → amende</span>
+                </div>
+
+                <div class="timeline">
+                  <div class="stepRow">
+                    <div class="stepIcon" aria-hidden="true">
+                      <!-- car -->
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 13l1-4a3 3 0 0 1 3-2h10a3 3 0 0 1 3 2l1 4" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linecap="round"/>
+                        <path d="M5 13h14v6H5v-6Z" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linejoin="round"/>
+                        <path d="M7.5 19.5v1.2M16.5 19.5v1.2" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div style="font-weight:750;">Vous stationnez</div>
+                      <div class="fine">Vous ouvrez PayByPhone machinalement.</div>
+                    </div>
+                  </div>
+
+                  <div class="stepRow">
+                    <div class="stepIcon" aria-hidden="true">
+                      <!-- toggle -->
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 16h10a4 4 0 0 0 0-8H7a4 4 0 0 0 0 8Z" stroke="rgba(255,255,255,.85)" stroke-width="1.6"/>
+                        <path d="M7 16a4 4 0 1 1 0-8" stroke="rgba(255,255,255,.85)" stroke-width="1.6"/>
+                        <path d="M9 12a2.2 2.2 0 1 1-4.4 0A2.2 2.2 0 0 1 9 12Z" fill="rgba(255,255,255,.85)"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div style="font-weight:750;">Vous oubliez l’option carte handicapé</div>
+                      <div class="fine">Ça arrive quand on est pressé, stressé, distrait.</div>
+                    </div>
+                  </div>
+
+                  <div class="stepRow">
+                    <div class="stepIcon" aria-hidden="true">
+                      <!-- ticket -->
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 4h10v4a2 2 0 0 0 0 4v4H7v-4a2 2 0 0 0 0-4V4Z" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linejoin="round"/>
+                        <path d="M10 8h4M10 12h4" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linecap="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div style="font-weight:750;">Résultat : contravention</div>
+                      <div class="fine">Une erreur minuscule… un impact bien réel.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top:14px; display:grid; gap:10px;">
+                  <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+                    Activer — 30€/mois
+                  </button>
+                  <div class="fine">
+                    Microcopy : formulaire de souscription front-only (démo). Aucune donnée n’est envoyée.
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROBLÈME CONCRET -->
+      <section id="probleme">
+        <div class="container">
+          <div class="scene">
+            <div>
+              <h2>Le vrai problème : ce n’est pas PayByPhone. C’est <i>l’oubli</i>.</h2>
+              <p>
+                Vous faites tout “comme d’habitude”. Et pourtant, <b>une seule case non activée</b> peut suffire.
+                Le pire : vous ne vous en rendez compte qu’après.
+              </p>
+
+              <div class="card cardPad">
+                <div class="sceneTop" style="margin-bottom:10px;">
+                  <div class="tag">Scène réelle</div>
+                  <div class="tag badgeBad">Le détail qui coûte</div>
+                </div>
+                <p style="margin-bottom:0;">
+                  “Je me gare 3 minutes. J’ouvre PayByPhone. Je valide vite… et je pars.
+                  Deux heures plus tard : une amende. J’avais oublié de rattacher la carte handicapé.”
+                </p>
+              </div>
             </div>
-            <div class="floatCard">
-              <b>Abonnement clair</b>
-              <span>Mensuel, annulable à tout moment. Paiement sécurisé via Stripe.</span>
+
+            <div class="card cardPadLg">
+              <h3 style="margin:0 0 8px; font-size:16px;">Ce que Vmaniche corrige</h3>
+              <p style="margin:0 0 12px;">
+                Vmaniche réduit le risque d’oubli en automatisant la prise en compte de la carte handicapé,
+                au moment où vous en avez besoin.
+              </p>
+
+              <div class="chip">
+                <span class="logoDot" aria-hidden="true" style="width:10px;height:10px; box-shadow:none;"></span>
+                <span><b>Important :</b> Vmaniche <b>ne paie pas</b> à votre place. Il automatise l’étape “carte handicapé”.</span>
+              </div>
+
+              <div style="margin-top:14px;">
+                <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+                  Réduire le risque d’oubli — 30€/mois
+                </button>
+                <div class="fine" style="margin-top:8px;">
+                  Microcopy : annulable à tout moment. Support inclus.
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- PRICING / CHECKOUT -->
-      <aside class="panel" id="pricing">
-        <div class="panelTop">
+      <!-- AVANT / APRÈS -->
+      <section id="avant-apres">
+        <div class="container">
+          <h2>Avant / Après : même routine. Moins de stress.</h2>
+          <p>On ne change pas votre vie. On supprime une étape fragile dans un moment où vous n’avez pas envie d’y penser.</p>
+
+          <div class="twoCol">
+            <div class="card cardPadLg baCard">
+              <h3>Avant Vmaniche</h3>
+              <div class="list">
+                <div class="li bad">
+                  <div class="mark" aria-hidden="true">✕</div>
+                  <div><b>Dépend de votre mémoire.</b> Un jour de fatigue, de stress ou de rush… et l’oubli arrive.</div>
+                </div>
+                <div class="li bad">
+                  <div class="mark" aria-hidden="true">✕</div>
+                  <div><b>Charge mentale.</b> “Est-ce que j’ai bien activé la carte ?”</div>
+                </div>
+                <div class="li bad">
+                  <div class="mark" aria-hidden="true">✕</div>
+                  <div><b>Risque d’amende.</b> Pas garanti, mais réel — et souvent injuste à vivre.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card cardPadLg baCard">
+              <h3>Après Vmaniche</h3>
+              <div class="list">
+                <div class="li ok">
+                  <div class="mark" aria-hidden="true">✓</div>
+                  <div><b>L’étape est automatisée.</b> Moins de chances d’oublier au mauvais moment.</div>
+                </div>
+                <div class="li ok">
+                  <div class="mark" aria-hidden="true">✓</div>
+                  <div><b>Routine plus simple.</b> Vous vous concentrez sur le stationnement, pas sur les réglages.</div>
+                </div>
+                <div class="li ok">
+                  <div class="mark" aria-hidden="true">✓</div>
+                  <div><b>Plus serein.</b> Une friction en moins, tous les jours.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display:grid; gap:10px;">
+            <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+              Activer Vmaniche — 30€/mois
+            </button>
+            <div class="fine">Microcopy : activation 2 minutes. Résiliation quand vous voulez.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMENT ÇA MARCHE -->
+      <section id="comment">
+        <div class="container">
+          <h2>Comment ça marche (3 étapes)</h2>
+          <p>Simple, direct, sans jargon. Vous comprenez en 10 secondes.</p>
+
+          <div class="steps">
+            <div class="card cardPadLg howItem">
+              <h3>1) Vous activez Vmaniche</h3>
+              <p>Vous souscrivez en ligne et renseignez votre e-mail + les infos nécessaires (format démo ici).</p>
+              <div class="fine">Objectif : une configuration courte, puis vous n’y pensez plus.</div>
+            </div>
+
+            <div class="card cardPadLg howItem">
+              <h3>2) Vmaniche automatise l’étape “carte handicapé”</h3>
+              <p>Au moment de stationner, la carte est prise en compte automatiquement, sans action manuelle répétée.</p>
+              <div class="fine">Vmaniche n’est pas un paiement : c’est une automatisation d’activation/rattachement.</div>
+            </div>
+
+            <div class="card cardPadLg howItem">
+              <h3>3) Vous gardez le contrôle</h3>
+              <p>Vous utilisez PayByPhone comme d’habitude. Vmaniche réduit la probabilité d’un oubli.</p>
+              <div class="fine">Pas de promesses impossibles : juste une friction en moins.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display:grid; gap:10px;">
+            <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+              Je veux l’automatisation — 30€/mois
+            </button>
+            <div class="fine">Microcopy : support inclus. Annulation à tout moment.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BÉNÉFICES -->
+      <section id="benefices">
+        <div class="container">
+          <h2>Bénéfices (orientés résultats)</h2>
+          <p>Ce que vous achetez réellement : de la simplicité, du calme, et moins d’erreurs bêtes.</p>
+
+          <div class="benefits">
+            <div class="card cardPadLg benefit">
+              <h3>Moins d’oubli = moins de stress</h3>
+              <p>Vous arrêtez de vérifier 2 fois. Vmaniche fait l’étape fragile pour vous.</p>
+            </div>
+            <div class="card cardPadLg benefit">
+              <h3>Routine plus rapide</h3>
+              <p>Stationner redevient un geste simple, même quand vous êtes pressé(e).</p>
+            </div>
+            <div class="card cardPadLg benefit">
+              <h3>Configuration une fois</h3>
+              <p>Vous n’avez pas à “y penser” à chaque stationnement. C’est le but.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display:grid; gap:10px;">
+            <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+              Activer et simplifier — 30€/mois
+            </button>
+            <div class="fine">Microcopy : activation 2 min. Résiliation quand vous voulez.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONFIANCE / SÉCURITÉ / TRANSPARENCE -->
+      <section id="confiance">
+        <div class="container">
+          <h2>Confiance, sécurité, transparence</h2>
+          <p>On préfère être clair plutôt que “marketé”. Voilà ce que Vmaniche fait — et ne fait pas.</p>
+
+          <div class="trustGrid">
+            <div class="card cardPadLg trustItem">
+              <h3>Compatibilité PayByPhone</h3>
+              <p>Vmaniche vise la prise en compte de la carte handicapé dans votre flux PayByPhone, sans remplacer l’app.</p>
+              <div class="fine">Si une limite technique existe selon votre configuration, on vous le dit.</div>
+            </div>
+
+            <div class="card cardPadLg trustItem">
+              <h3>Sécurité des données</h3>
+              <p>Principe : collecter le minimum, limiter l’exposition, et privilégier la clarté.</p>
+              <div class="fine">Cette page est une démo front-only : aucune donnée n’est envoyée.</div>
+            </div>
+
+            <div class="card cardPadLg trustItem">
+              <h3>Pas de promesses impossibles</h3>
+              <p>On ne garantit pas “zéro amende”. On réduit un risque courant : l’oubli d’activation/rattachement.</p>
+              <div class="fine">Transparence > slogans.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BLOC ABONNEMENT INTÉGRÉ -->
+      <section id="abonnement">
+        <div class="container">
+          <h2>L’abonnement, intégré (pas de page pricing inutile)</h2>
+          <p>Une offre unique. Simple. Et résiliable à tout moment.</p>
+
+          <div class="pricingWrap">
+            <div class="card cardPadLg">
+              <div class="kicker" style="margin-bottom:10px;">
+                <span class="logoDot" aria-hidden="true" style="width:10px;height:10px; box-shadow:none;"></span>
+                <span><b>Vmaniche</b> — Abonnement mensuel</span>
+              </div>
+
+              <div class="price">30€ <small>/ mois</small></div>
+              <p style="margin-bottom:10px;">
+                Pour celles et ceux qui veulent arrêter de se faire piéger par un oubli.
+              </p>
+
+              <div class="included" aria-label="Inclus">
+                <div class="li ok">
+                  <div class="mark" aria-hidden="true">✓</div>
+                  <div><b>Automatisation</b> de la prise en compte de la carte handicapé</div>
+                </div>
+                <div class="li ok">
+                  <div class="mark" aria-hidden="true">✓</div>
+                  <div><b>Annulation</b> à tout moment (sans justification)</div>
+                </div>
+                <div class="li ok">
+                  <div class="mark" aria-hidden="true">✓</div>
+                  <div><b>Support</b> inclus pour vous aider à configurer</div>
+                </div>
+                <div class="li ok">
+                  <div class="mark" aria-hidden="true">✓</div>
+                  <div><b>Transparence</b> : Vmaniche ne paie pas à votre place</div>
+                </div>
+              </div>
+
+              <div class="noteBox">
+                <b>Positionnement clair :</b> vous continuez à utiliser PayByPhone.
+                Vmaniche automatise l’étape “carte handicapé” afin de réduire les oublis — sans promesse irréaliste.
+              </div>
+            </div>
+
+            <div class="card cardPadLg">
+              <h3 style="margin:0 0 8px; font-size:16px;">Décision rapide</h3>
+              <p>
+                Si vous vous êtes déjà dit “mince… j’ai oublié”, vous êtes exactement la personne visée.
+                <b>Activez</b>, testez votre routine, et gardez uniquement si ça vous simplifie vraiment la vie.
+              </p>
+
+              <div style="display:grid; gap:10px; margin-top:12px;">
+                <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+                  Souscrire — 30€/mois
+                </button>
+                <div class="fine">Microcopy : résiliation quand vous voulez. Paiement sécurisé.</div>
+
+                <a class="btn btnGhost" href="#faq">
+                  Lire la FAQ (12+ questions)
+                </a>
+                <div class="fine">Microcopy : compatibilité, sécurité, annulation, carte… tout est expliqué.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TÉMOIGNAGES -->
+      <section id="temoignages">
+        <div class="container">
+          <h2>Témoignages</h2>
+          <p>Courts, concrets, crédibles. Pas de “miracles”. Juste une étape en moins.</p>
+
+          <div class="testimonials">
+            <div class="card quote">
+              <p>“Je me suis rendu compte que mon problème, c’était la répétition. Vmaniche m’a retiré cette charge mentale.”</p>
+              <div class="who">
+                <span>Samira</span>
+                <span>Utilisateur PayByPhone</span>
+              </div>
+            </div>
+
+            <div class="card quote">
+              <p>“Je ne voulais pas ‘un truc en plus’. Là, c’est justement l’inverse : une étape en moins.”</p>
+              <div class="who">
+                <span>Marc</span>
+                <span>Stationnement quotidien</span>
+              </div>
+            </div>
+
+            <div class="card quote">
+              <p>“Pas de promesses absurdes. Juste une config simple et je passe à autre chose.”</p>
+              <div class="who">
+                <span>Élodie</span>
+                <span>Routine simplifiée</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display:grid; gap:10px;">
+            <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+              Activer comme eux — 30€/mois
+            </button>
+            <div class="fine">Microcopy : activation 2 min. Annulable à tout moment.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <div class="container">
+          <h2>FAQ</h2>
+          <p>Pas de zone grise. Si vous vous posez la question, elle est ici.</p>
+
+          <div class="faq" aria-label="Questions fréquentes">
+            <details>
+              <summary>
+                Est-ce que Vmaniche paie à ma place ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                <b>Non.</b> Vmaniche n’est pas un outil de paiement. Il automatise uniquement l’étape liée à la <b>prise en compte de la carte handicapé</b> dans votre routine PayByPhone.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Vmaniche est-il compatible avec PayByPhone ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Vmaniche est conçu pour fonctionner <b>avec</b> votre usage de PayByPhone (et pas contre). En cas de limite selon votre configuration, le support vous guide et vous dit clairement ce qui est possible.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Est-ce légal / conforme ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Vmaniche n’essaie pas de contourner quoi que ce soit : il vise à <b>réduire un oubli</b> dans une étape utilisateur. Il ne promet pas d’éviter toute sanction et ne remplace pas les règles locales.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Combien de temps pour activer ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                En général, <b>2 minutes</b>. Vous souscrivez, vous renseignez les infos nécessaires, puis vous utilisez PayByPhone comme d’habitude.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Puis-je annuler quand je veux ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Oui. L’abonnement est <b>mensuel</b> et <b>annulable à tout moment</b>. Pas d’engagement longue durée.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Que se passe-t-il si je change de carte bancaire ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Vous mettez simplement à jour vos informations de paiement dans votre espace (logique abonnement). Sur cette page démo, le formulaire est front-only.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Et si je change de carte handicapé (nouvelle carte / renouvellement) ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Vous mettez à jour l’identifiant/numéro associé. Le support peut vous accompagner pour que tout reste propre.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Est-ce que Vmaniche garantit “zéro amende” ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                <b>Non.</b> Personne ne peut promettre ça sérieusement. Vmaniche réduit le risque d’un scénario précis : <b>l’oubli d’activation/rattachement</b> de la carte handicapé.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Mes données sont-elles en sécurité ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Principe : <b>minimum nécessaire</b> + clarté + bonnes pratiques. Et sur cette page : aucune donnée n’est envoyée (démo front-only).
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Est-ce que ça marche si je stationne rarement ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Justement : si vous stationnez rarement, vous êtes parfois <b>moins “rodé(e)”</b>. Vmaniche vise à sécuriser cette étape quand vous n’avez pas l’habitude.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Vmaniche remplace-t-il PayByPhone ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Non. Vous continuez à utiliser PayByPhone. Vmaniche se positionne comme une <b>couche d’automatisation</b> sur l’étape “carte handicapé”.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Y a-t-il un support si je bloque ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Oui, le support est inclus dans l’abonnement. Objectif : activation rapide, et ensuite vous n’y pensez plus.
+              </div>
+            </details>
+
+            <details>
+              <summary>
+                Puis-je tester puis arrêter si ça ne me convient pas ?
+                <span class="chev" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="faqBody">
+                Oui. L’abonnement est mensuel et résiliable à tout moment. Vous gardez uniquement si la routine est vraiment plus simple.
+              </div>
+            </details>
+          </div>
+
+          <div style="margin-top:16px; display:grid; gap:10px;">
+            <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+              OK, j’active — 30€/mois
+            </button>
+            <div class="fine">Microcopy : paiement sécurisé. Annulable à tout moment. Configuration rapide.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section class="final" id="cta-final">
+        <div class="container">
+          <div class="card finalBox">
+            <div class="inner">
+              <h2 style="margin:0 0 10px;">Vous ne devriez pas payer pour un oubli.</h2>
+              <p style="max-width: 62ch;">
+                Vmaniche est fait pour une situation simple : vous stationnez, vous allez vite,
+                et vous oubliez l’étape “carte handicapé”. On automatise. Vous respirez.
+              </p>
+
+              <div class="ctaRow" style="margin-top:14px;">
+                <button class="btn btnPrimary js-open" type="button" aria-haspopup="dialog">
+                  Activer Vmaniche — 30€/mois
+                </button>
+                <a class="btn btnGhost" href="#probleme">
+                  Relire le problème
+                </a>
+              </div>
+
+              <div class="ctaUnder">
+                <span>Microcopy : résiliation à tout moment.</span>
+                <span>Microcopy : support inclus.</span>
+                <span>Microcopy : pas de promesse “zéro amende”.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer role="contentinfo">
+        <div class="container">
+          <div class="footRow">
+            <div>
+              <div style="font-weight:800; color: rgba(255,255,255,.85);">Vmaniche</div>
+              <div class="fine">© <span id="year"></span> — Démo de page marketing (front-only)</div>
+            </div>
+            <div class="footLinks" aria-label="Liens">
+              <a href="#abonnement">Abonnement</a>
+              <a href="#faq">FAQ</a>
+              <a href="#top">Haut de page</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <!-- MODAL Souscription -->
+    <div class="modalOverlay" id="modalOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal" role="document">
+        <div class="modalHeader">
           <div>
-            <div class="title">Abonnement PMR Auto</div>
-            <div class="muted">Activation rapide • Support si besoin</div>
+            <h3 id="modalTitle">Souscription Vmaniche — 30€/mois</h3>
+            <p>Annulable à tout moment. Ceci est une démo : aucune donnée n’est envoyée.</p>
           </div>
-          <div class="tag">Mensuel</div>
+          <button class="closeBtn js-close" type="button" aria-label="Fermer">✕</button>
         </div>
 
-        <div>
-          <div class="price">9,99€</div>
-          <div class="per">par mois • annulable à tout moment</div>
+        <div class="modalBody">
+          <form id="subForm" class="formGrid" novalidate>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="ex: prenom.nom@email.com" autocomplete="email" required />
+            </div>
+
+            <div class="field">
+              <label for="cardNumber">Numéro de carte</label>
+              <input id="cardNumber" name="cardNumber" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456" autocomplete="cc-number" required />
+            </div>
+
+            <div class="row2">
+              <div class="field">
+                <label for="exp">Expiration</label>
+                <input id="exp" name="exp" type="text" inputmode="numeric" placeholder="MM/AA" autocomplete="cc-exp" required />
+              </div>
+              <div class="field">
+                <label for="cvc">CVC</label>
+                <input id="cvc" name="cvc" type="text" inputmode="numeric" placeholder="123" autocomplete="cc-csc" required />
+              </div>
+            </div>
+
+            <div class="chip">
+              <span class="logoDot" aria-hidden="true" style="width:10px;height:10px; box-shadow:none;"></span>
+              <span><b>Rappel :</b> Vmaniche ne paie pas le stationnement. Il automatise l’étape “carte handicapé”.</span>
+            </div>
+          </form>
         </div>
 
-        <div class="divider"></div>
-
-        <div>
-          <label for="plate">Votre plaque (une seule fois)</label>
-          <input id="plate" placeholder="AA-123-AA" autocomplete="off" />
-          <div class="muted" style="margin-top:8px">
-            On associe votre véhicule à l’activation automatique du statut PMR.
+        <div class="modalFooter">
+          <div class="success" id="successBox" aria-hidden="true">
+            ✅ <b>Demande confirmée (démo).</b> Dans une version réelle, votre abonnement serait créé et vous recevriez un e-mail de confirmation.
           </div>
-        </div>
 
-        <button class="btn btnBig" id="subscribeBtn">Souscrire & activer</button>
-
-        <ul class="checks">
-          <li><span class="tick">✓</span><span>Configuration unique (plaque)</span></li>
-          <li><span class="tick">✓</span><span>Statut PMR appliqué automatiquement ensuite</span></li>
-          <li><span class="tick">✓</span><span>Annulation simple</span></li>
-        </ul>
-
-        <div class="note">
-          Important : PMR Auto ne remplace pas les règles locales de stationnement.
-          L’utilisateur doit disposer d’une carte / autorisation PMR valide.
-        </div>
-
-        <div class="trustRow">
-          <div class="trust"><b>Paiement Stripe</b><br/>Sécurisé & standard</div>
-          <div class="trust"><b>Résiliation</b><br/>À tout moment</div>
-          <div class="trust"><b>Support</b><br/>Réactif si besoin</div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- BEFORE / AFTER -->
-    <section class="section" id="avantapres">
-      <div class="secTitle">
-        <h2>Avant / Après : pourquoi ça change tout</h2>
-        <div class="tag">Visuel & clair</div>
-      </div>
-
-      <div class="ba">
-        <div class="baBox">
-          <div class="baHead">
-            <b>Avant PMR Auto</b>
-            <div class="badge">Répétitif</div>
-          </div>
-          <ul class="baList">
-            <li>À chaque stationnement : vous refaites la manipulation “PMR / carte handicapée”.</li>
-            <li>Vous perdez du temps à cliquer, naviguer, vérifier.</li>
-            <li>Risque d’oubli (stress : “est-ce que c’est bien activé ?”).</li>
-            <li>Expérience fatigante si vous stationnez souvent.</li>
-          </ul>
-        </div>
-
-        <div class="baBox">
-          <div class="baHead">
-            <b>Après PMR Auto</b>
-            <div class="badge badgeOk">Automatique</div>
-          </div>
-          <ul class="baList">
-            <li>Vous saisissez votre plaque une seule fois au moment de l’abonnement.</li>
-            <li>Ensuite : le statut PMR est appliqué automatiquement lors de vos stationnements.</li>
-            <li>Moins de clics, moins d’erreurs, moins de charge mentale.</li>
-            <li>Vous gagnez du temps, à chaque session.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- HOW -->
-    <section class="section" id="how">
-      <div class="secTitle">
-        <h2>Comment ça marche (simple et concret)</h2>
-        <div class="tag">3 étapes</div>
-      </div>
-
-      <div class="steps">
-        <div class="step">
-          <div class="num">1</div>
-          <div>
-            <b>Vous vous abonnez et saisissez votre plaque</b>
-            <div class="muted">C’est une configuration unique. Vous ne revenez pas sur le site pour retaper votre immatriculation.</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="num">2</div>
-          <div>
-            <b>Votre véhicule est associé à l’activation PMR</b>
-            <div class="muted">On utilise la plaque pour appliquer automatiquement le statut PMR lors de vos stationnements (dans le cadre des règles applicables).</div>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="num">3</div>
-          <div>
-            <b>Quand vous stationnez, vous ne refaites plus la manipulation</b>
-            <div class="muted">Le statut PMR est appliqué automatiquement : moins d’étapes, moins de stress, moins d’oubli.</div>
+          <button class="btn btnPrimary" type="button" id="confirmBtn">
+            Confirmer l’abonnement
+          </button>
+          <div class="fine">
+            Microcopy : paiement sécurisé • annulation à tout moment • support inclus
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- WHY -->
-    <section class="section" id="why">
-      <div class="secTitle">
-        <h2>Avantages</h2>
-        <div class="tag">Pensé pour le quotidien</div>
-      </div>
-
-      <div class="grid3">
-        <div class="card">
-          <b>Moins de stress</b>
-          <p>Vous ne vous demandez plus si vous avez bien activé l’option PMR avant de valider.</p>
-        </div>
-        <div class="card">
-          <b>Gain de temps réel</b>
-          <p>Vous supprimez des étapes répétitives à chaque stationnement. C’est ça, la vraie valeur.</p>
-        </div>
-        <div class="card">
-          <b>Configuration unique</b>
-          <p>La plaque est saisie une fois. Ensuite, vous profitez du service sans friction.</p>
-        </div>
-        <div class="card">
-          <b>Abonnement clair</b>
-          <p>Mensuel, annulable à tout moment. Pas de surprise.</p>
-        </div>
-        <div class="card">
-          <b>Sécurité</b>
-          <p>Paiement sécurisé via Stripe (standard du marché).</p>
-        </div>
-        <div class="card">
-          <b>Support</b>
-          <p>Si vous changez de voiture ou si vous avez un souci, on vous aide.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section class="section" id="temoignages">
-      <div class="secTitle">
-        <h2>Témoignages</h2>
-        <div class="tag">Ce que les gens disent</div>
-      </div>
-
-      <div class="testGrid">
-        <div class="quote">
-          <p>“Avant, je refaisais la manip PMR à chaque stationnement. Maintenant c’est réglé, ça enlève un vrai stress.”</p>
-          <div class="who">
-            <div class="avatar"></div>
-            <div><b>Utilisateur à Paris</b><span>Stationne régulièrement</span></div>
-          </div>
-        </div>
-
-        <div class="quote">
-          <p>“Le fait de rentrer la plaque une fois et de ne plus y penser, c’est exactement ce qu’il manquait.”</p>
-          <div class="who">
-            <div class="avatar"></div>
-            <div><b>Utilisateur</b><span>Usage quotidien</span></div>
-          </div>
-        </div>
-
-        <div class="quote">
-          <p>“Abonnement clair, activation rapide, et surtout : moins de clics à chaque fois. Simple.”</p>
-          <div class="who">
-            <div class="avatar"></div>
-            <div><b>Utilisateur</b><span>Occasionnel</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-      <div class="secTitle">
-        <h2>FAQ</h2>
-        <div class="tag">Questions fréquentes</div>
-      </div>
-
-      <div class="faq">
-        <details>
-          <summary>Je dois entrer ma plaque à chaque stationnement ?</summary>
-          <p>Non. Vous saisissez votre plaque une seule fois au moment de l’abonnement. Ensuite, vous n’avez plus besoin de revenir sur le site pour la retaper.</p>
-        </details>
-
-        <details>
-          <summary>Est-ce que je dois quand même respecter les règles de stationnement ?</summary>
-          <p>Oui. PMR Auto ne remplace pas les règles locales : vous devez disposer d’une carte / autorisation PMR valide et respecter les conditions applicables.</p>
-        </details>
-
-        <details>
-          <summary>Et si je change de voiture ?</summary>
-          <p>Vous pourrez modifier la plaque (à ajouter via un petit formulaire “changer de plaque”, ou via le support au début).</p>
-        </details>
-
-        <details>
-          <summary>Comment j’annule ?</summary>
-          <p>Vous annulez à tout moment : abonnement mensuel sans engagement long.</p>
-        </details>
-
-        <details>
-          <summary>Paiement sécurisé ?</summary>
-          <p>Oui, le paiement est géré via Stripe (standard du marché).</p>
-        </details>
-      </div>
-    </section>
-
-    <div class="foot">
-      <div>© <span id="year"></span> PMR Auto</div>
-      <div>CGU • Confidentialité • Support</div>
     </div>
-
   </div>
 
   <script>
-    // ✅ Mets ton lien Stripe ici :
-    const STRIPE_LINK = "https://buy.stripe.com/TON_LIEN_ICI";
+    // =========================
+    // Minimal JS: modal + FAQ behavior polish + input helpers
+    // =========================
+    (function(){
+      const overlay = document.getElementById('modalOverlay');
+      const openButtons = document.querySelectorAll('.js-open');
+      const closeButtons = document.querySelectorAll('.js-close');
+      const confirmBtn = document.getElementById('confirmBtn');
+      const form = document.getElementById('subForm');
+      const successBox = document.getElementById('successBox');
+      const year = document.getElementById('year');
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+      year.textContent = new Date().getFullYear();
 
-    function normalizePlate(p){
-      return (p || "")
-        .trim()
-        .toUpperCase()
-        .replace(/\s+/g,"")
-        .replace(/[^A-Z0-9-]/g,"");
-    }
-
-    function goCheckout(){
-      const plate = normalizePlate(document.getElementById("plate").value);
-      if(!plate){
-        alert("Merci d’entrer votre plaque 🙂");
-        return;
+      function openModal(){
+        overlay.setAttribute('aria-hidden','false');
+        // lock scroll
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        // reset state
+        successBox.setAttribute('aria-hidden','true');
+        // focus email after a tick for animation
+        setTimeout(() => {
+          const email = document.getElementById('email');
+          if(email) email.focus();
+        }, 60);
       }
-      localStorage.setItem("plate", plate);
-      window.location.href = STRIPE_LINK;
-    }
 
-    document.getElementById("subscribeBtn").addEventListener("click", goCheckout);
+      function closeModal(){
+        overlay.setAttribute('aria-hidden','true');
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
 
-    function focusPricing(){
-      document.getElementById("pricing").scrollIntoView({behavior:"smooth", block:"start"});
-      setTimeout(() => document.getElementById("plate").focus(), 350);
-    }
+      openButtons.forEach(btn => btn.addEventListener('click', openModal));
+      closeButtons.forEach(btn => btn.addEventListener('click', closeModal));
 
-    document.getElementById("goPricing").addEventListener("click", focusPricing);
-    document.getElementById("goSubscribe").addEventListener("click", focusPricing);
-    document.getElementById("heroCta").addEventListener("click", focusPricing);
+      // click outside closes
+      overlay.addEventListener('click', (e) => {
+        if(e.target === overlay) closeModal();
+      });
 
-    document.getElementById("heroLearn").addEventListener("click", () => {
-      document.getElementById("how").scrollIntoView({behavior:"smooth", block:"start"});
-    });
+      // ESC closes
+      document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape' && overlay.getAttribute('aria-hidden') === 'false') closeModal();
+      });
+
+      // Fake "submit" (front-only)
+      confirmBtn.addEventListener('click', () => {
+        // Basic validity check
+        const email = document.getElementById('email');
+        const card = document.getElementById('cardNumber');
+        const exp  = document.getElementById('exp');
+        const cvc  = document.getElementById('cvc');
+
+        // Trigger native UI if invalid
+        if(!email.checkValidity() || !card.value.trim() || !exp.value.trim() || !cvc.value.trim()){
+          form.querySelectorAll('input[required]').forEach(inp => {
+            if(!inp.value.trim()) inp.style.borderColor = 'rgba(251,113,133,.45)';
+            else inp.style.borderColor = '';
+          });
+          email.reportValidity();
+          return;
+        }
+
+        // Show success box
+        successBox.setAttribute('aria-hidden','false');
+
+        // Soft micro animation feedback
+        confirmBtn.style.transform = 'translateY(1px) scale(.99)';
+        setTimeout(() => confirmBtn.style.transform = '', 120);
+      });
+
+      // Input formatting helpers (minimal, optional)
+      const cardNumber = document.getElementById('cardNumber');
+      cardNumber.addEventListener('input', () => {
+        const digits = cardNumber.value.replace(/\D/g,'').slice(0,16);
+        const groups = digits.match(/.{1,4}/g) || [];
+        cardNumber.value = groups.join(' ');
+      });
+
+      const exp = document.getElementById('exp');
+      exp.addEventListener('input', () => {
+        let v = exp.value.replace(/\D/g,'').slice(0,4);
+        if(v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+        exp.value = v;
+      });
+
+      const cvc = document.getElementById('cvc');
+      cvc.addEventListener('input', () => {
+        cvc.value = cvc.value.replace(/\D/g,'').slice(0,4);
+      });
+
+      // FAQ: close others when one opens (optional CRO cleanliness)
+      const allDetails = Array.from(document.querySelectorAll('details'));
+      allDetails.forEach(d => {
+        d.addEventListener('toggle', () => {
+          if(d.open){
+            allDetails.forEach(other => {
+              if(other !== d) other.open = false;
+            });
+          }
+        });
+      });
+    })();
   </script>
 </body>
 </html>
