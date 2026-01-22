@@ -3,71 +3,400 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Abonnement Auto Parking</title>
+  <title>AutoParking — Abonnement</title>
+  <meta name="description" content="Payez votre stationnement automatiquement. Entrez votre plaque, abonnez-vous, et on gère le reste." />
+
   <style>
-    body{margin:0;font-family:Arial;background:#0b0f19;color:#fff}
-    .wrap{max-width:1000px;margin:auto;padding:40px 20px}
-    .hero{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap}
-    .left{flex:1;min-width:280px}
-    .right{width:360px;max-width:100%;background:#111a2e;border:1px solid rgba(255,255,255,.1);padding:20px;border-radius:14px}
-    h1{font-size:42px;margin:0 0 12px}
-    p{color:#b9c2dc;line-height:1.5}
-    .btn{display:inline-block;background:#7c5cff;color:#fff;padding:14px 18px;border-radius:12px;text-decoration:none;font-weight:700;border:none;cursor:pointer;width:100%}
-    input{width:100%;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0b0f19;color:#fff;margin-top:8px}
-    .price{font-size:34px;font-weight:800;margin:10px 0}
-    .mini{font-size:13px;color:#b9c2dc;margin-top:10px}
-    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
-    .card{background:#0f172a;border:1px solid rgba(255,255,255,.1);padding:14px;border-radius:14px}
-    .card b{display:block;margin-bottom:6px}
-    @media(max-width:800px){h1{font-size:34px}.features{grid-template-columns:1fr}}
+    :root{
+      --bg0:#050814;
+      --bg1:#070b1a;
+      --card:rgba(255,255,255,.06);
+      --line:rgba(255,255,255,.12);
+      --text:#eef2ff;
+      --muted:#a8b0d6;
+      --accent:#7c5cff;
+      --accent2:#28d7a9;
+      --shadow: 0 30px 90px rgba(0,0,0,.55);
+      --r: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; padding:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; color:var(--text); background:var(--bg0)}
+    a{color:inherit; text-decoration:none}
+    .bg{
+      min-height:100vh;
+      background:
+        radial-gradient(900px 500px at 10% 10%, rgba(124,92,255,.28), transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, rgba(40,215,169,.18), transparent 55%),
+        radial-gradient(900px 600px at 55% 95%, rgba(124,92,255,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 60%, #050713);
+      overflow:hidden;
+    }
+    .wrap{max-width:1120px; margin:0 auto; padding:28px 18px 80px}
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:999px;
+      backdrop-filter: blur(10px);
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.2px}
+    .dot{
+      width:12px; height:12px; border-radius:999px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow: 0 0 0 6px rgba(124,92,255,.12);
+    }
+    .navlinks{display:flex; gap:16px; color:var(--muted); font-size:14px; align-items:center}
+    .navlinks a{opacity:.9}
+    .navcta{
+      display:flex; gap:10px; align-items:center;
+    }
+    .pill{
+      font-size:12px; color:var(--muted);
+      border:1px solid var(--line);
+      padding:8px 10px; border-radius:999px;
+      background:rgba(255,255,255,.02);
+      white-space:nowrap;
+    }
+    .btn{
+      border:0; cursor:pointer; font-weight:800;
+      padding:10px 14px; border-radius:999px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#07101a;
+      box-shadow: 0 18px 60px rgba(124,92,255,.18);
+      white-space:nowrap;
+    }
+
+    .hero{
+      margin-top:26px;
+      display:grid; grid-template-columns: 1.08fr .92fr; gap:22px;
+      align-items:stretch;
+    }
+    .heroLeft{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:var(--r);
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-size:13px;
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size:48px; line-height:1.02;
+      letter-spacing:-.02em;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:17px;
+      line-height:1.55;
+      max-width:58ch;
+      margin:0 0 16px;
+    }
+    .heroGrid{
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:12px; margin-top:18px;
+    }
+    .mini{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:12px;
+    }
+    .mini b{display:block; margin-bottom:5px; font-size:14px}
+    .mini span{color:var(--muted); font-size:13px; line-height:1.35}
+
+    .heroArt{
+      position:absolute;
+      right:-30px; top:-40px;
+      width:360px; height:360px;
+      opacity:.9;
+      filter: drop-shadow(0 40px 90px rgba(0,0,0,.7));
+      pointer-events:none;
+      transform: rotate(8deg);
+    }
+
+    .heroRight{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border-radius:var(--r);
+      padding:18px;
+      box-shadow: var(--shadow);
+      display:flex; flex-direction:column; gap:14px;
+    }
+    .priceRow{display:flex; justify-content:space-between; align-items:flex-start; gap:10px}
+    .title{
+      font-weight:900; font-size:18px;
+    }
+    .muted{color:var(--muted); font-size:13px; line-height:1.35}
+    .price{
+      font-size:38px; font-weight:950; letter-spacing:-.02em;
+    }
+    .per{color:var(--muted); font-size:13px; margin-top:4px}
+    .divider{height:1px; background:rgba(255,255,255,.10)}
+    label{display:block; color:var(--muted); font-size:13px; margin:0 0 6px}
+    input{
+      width:100%;
+      padding:14px 14px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(6,9,18,.55);
+      color:var(--text);
+      outline:none;
+      font-size:16px;
+    }
+    input:focus{
+      border-color: rgba(124,92,255,.55);
+      box-shadow: 0 0 0 4px rgba(124,92,255,.14);
+    }
+    .btnBig{
+      width:100%;
+      padding:14px 16px;
+      border-radius:14px;
+      font-size:16px;
+    }
+    .checks{display:grid; gap:10px; margin:0; padding:0; list-style:none}
+    .checks li{display:flex; gap:10px; align-items:flex-start; color:var(--muted); font-size:14px}
+    .tick{
+      width:18px; height:18px; border-radius:6px;
+      display:grid; place-items:center;
+      background:rgba(40,215,169,.14);
+      border:1px solid rgba(40,215,169,.32);
+      color:var(--accent2);
+      font-weight:900;
+      flex:0 0 18px;
+      margin-top:2px;
+    }
+
+    .section{
+      margin-top:22px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.02);
+      border-radius:var(--r);
+      padding:18px;
+    }
+    .secTitle{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:12px;
+    }
+    .secTitle h2{margin:0; font-size:18px}
+    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap:12px}
+    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+      border-radius:16px;
+      padding:14px;
+    }
+    .card b{display:block; margin-bottom:6px}
+    .foot{
+      margin-top:26px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      color:var(--muted); font-size:13px;
+      opacity:.95;
+    }
+
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.03);
+      padding:7px 10px;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
+      h1{font-size:40px}
+      .heroGrid{grid-template-columns:1fr}
+      .heroArt{right:-90px; top:-70px; width:340px; height:340px; opacity:.75}
+      .grid3{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+    }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <div class="hero">
-      <div class="left">
-        <h1>Payez votre parking automatiquement.</h1>
-        <p>
-          Fini les applis où tu dois cocher des options à chaque fois.<br>
-          Tu mets ta plaque, tu t’abonnes, et tout se fait automatiquement.
-        </p>
 
-        <div class="features">
-          <div class="card"><b>Rapide</b><span>Activation en moins de 30 secondes.</span></div>
-          <div class="card"><b>Automatique</b><span>Plus besoin de relancer l’appli.</span></div>
-          <div class="card"><b>Sécurisé</b><span>Paiement sécurisé, annulation à tout moment.</span></div>
+<body>
+  <div class="bg">
+    <div class="wrap">
+
+      <div class="nav">
+        <div class="brand">
+          <span class="dot"></span>
+          <span>AutoParking</span>
+        </div>
+
+        <div class="navlinks">
+          <a href="#how">Comment ça marche</a>
+          <a href="#why">Avantages</a>
+          <a href="#pricing">Offre</a>
+        </div>
+
+        <div class="navcta">
+          <span class="pill">Abonnement • Paiement sécurisé</span>
+          <button class="btn" id="navGo">Souscrire</button>
         </div>
       </div>
 
-      <div class="right">
-        <div style="font-weight:800;font-size:18px">Abonnement Auto Parking</div>
-        <div class="price">9,99€<span style="font-size:14px;color:#b9c2dc;font-weight:500"> / mois</span></div>
+      <section class="hero" id="top">
+        <div class="heroLeft">
+          <span class="kicker">🚗 Stationnement automatique • 30 secondes pour commencer</span>
+          <h1>Tu mets ta plaque. <br/>On gère le parking.</h1>
+          <p class="sub">
+            Fini les applis où tu dois cocher des options à chaque session.
+            Avec AutoParking, tu t’abonnes une fois, tu saisis ta plaque, et tout devient automatique.
+          </p>
 
-        <label style="font-size:13px;color:#b9c2dc">Plaque d’immatriculation</label>
-        <input id="plate" placeholder="AA-123-AA" />
+          <div class="heroGrid">
+            <div class="mini"><b>Instantané</b><span>Activation immédiate après souscription.</span></div>
+            <div class="mini"><b>Sans prise de tête</b><span>Une plaque, un abonnement, terminé.</span></div>
+            <div class="mini"><b>Propre & sécurisé</b><span>Paiement Stripe, annulation quand tu veux.</span></div>
+          </div>
 
-        <button class="btn" id="subscribeBtn" style="margin-top:14px">
-          Souscrire à l’abonnement
-        </button>
+          <!-- Illustration avion (SVG intégré, pas de fichiers à gérer) -->
+          <svg class="heroArt" viewBox="0 0 512 512" fill="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="80" y1="90" x2="420" y2="430" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#7c5cff"/>
+                <stop offset="1" stop-color="#28d7a9"/>
+              </linearGradient>
+              <radialGradient id="g2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(260 250) rotate(90) scale(210)">
+                <stop stop-color="rgba(255,255,255,.65)"/>
+                <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="260" cy="250" r="210" fill="url(#g2)" opacity=".35"/>
+            <path d="M466 248c-14-8-96-42-167-70l-10-86c-1-8-7-14-15-14h-20c-9 0-16 7-15 16l6 73-80-34-31-62c-3-7-10-11-18-9l-22 6c-8 2-13 10-10 18l18 53-54-22c-10-4-22 0-26 10l-4 10c-4 10 1 22 11 26l69 29 69 29-20 46-60 10c-8 1-14 8-14 16v18c0 10 9 18 19 16l83-15 70 29c71 29 155 61 172 61 23 0 40-14 40-34 0-20-13-30-28-38z"
+                  fill="url(#g1)" opacity=".95"/>
+            <path d="M128 344c38-8 93-29 127-53" stroke="rgba(255,255,255,.55)" stroke-width="10" stroke-linecap="round" opacity=".45"/>
+          </svg>
+        </div>
 
-        <div class="mini">Annulable à tout moment • Support rapide</div>
+        <div class="heroRight" id="pricing">
+          <div class="priceRow">
+            <div>
+              <div class="title">Abonnement AutoParking</div>
+              <div class="muted">Accès complet • Activation instantanée</div>
+            </div>
+            <span class="tag">🔒 Secure</span>
+          </div>
+
+          <div>
+            <div class="price">9,99€</div>
+            <div class="per">par mois • annulable à tout moment</div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div>
+            <label for="plate">Plaque d’immatriculation</label>
+            <input id="plate" placeholder="AA-123-AA" autocomplete="off" />
+            <div class="muted" style="margin-top:8px">
+              On l’utilise uniquement pour activer automatiquement ton stationnement.
+            </div>
+          </div>
+
+          <button class="btn btnBig" id="subscribeBtn">Souscrire à l’abonnement</button>
+
+          <ul class="checks">
+            <li><span class="tick">✓</span><span>Configuration en moins d’une minute</span></li>
+            <li><span class="tick">✓</span><span>Paiement sécurisé via Stripe</span></li>
+            <li><span class="tick">✓</span><span>Annulation simple, sans stress</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="how">
+        <div class="secTitle">
+          <h2>Comment ça marche</h2>
+          <span class="tag">⚡ Simple</span>
+        </div>
+        <div class="grid3">
+          <div class="card"><b>1) Tu entres ta plaque</b><div class="muted">Une fois, sur cette page.</div></div>
+          <div class="card"><b>2) Tu souscris</b><div class="muted">Paiement récurrent, sécurisé.</div></div>
+          <div class="card"><b>3) Automatique</b><div class="muted">L’app fait le reste derrière.</div></div>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="secTitle">
+          <h2>Pourquoi c’est mieux</h2>
+          <span class="tag">🚀 Gain de temps</span>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <b>Tu ne “cliques” plus nulle part</b>
+            <div class="muted">Tu élimines les étapes inutiles : tu t’abonnes, tu passes à autre chose.</div>
+          </div>
+          <div class="card">
+            <b>Propre, rapide, clair</b>
+            <div class="muted">Une page, une action. Pas de confusion. Zéro friction.</div>
+          </div>
+          <div class="card">
+            <b>Compatible mobile</b>
+            <div class="muted">Design pensé pour iPhone/Android. Tout est lisible et fluide.</div>
+          </div>
+          <div class="card">
+            <b>Sécurité</b>
+            <div class="muted">Paiement Stripe (standard du marché) + contrôle simple de l’abonnement.</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="foot">
+        <div>© <span id="year"></span> AutoParking</div>
+        <div>CGU • Confidentialité • Support</div>
       </div>
+
     </div>
   </div>
 
   <script>
-    const STRIPE_LINK = "https://buy.stripe.com/TON_LIEN_ICI"; // 🔥 mets ton lien Stripe ici
+    // Mets ton lien Stripe ici :
+    const STRIPE_LINK = "https://buy.stripe.com/TON_LIEN_ICI";
 
-    document.getElementById("subscribeBtn").addEventListener("click", () => {
-      const plate = document.getElementById("plate").value.trim();
-      if (!plate) {
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function normalizePlate(p){
+      return (p || "")
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g,"")
+        .replace(/[^A-Z0-9-]/g,"");
+    }
+
+    function goCheckout(){
+      const plate = normalizePlate(document.getElementById("plate").value);
+      if(!plate){
         alert("Merci d’entrer votre plaque 🙂");
         return;
       }
-      localStorage.setItem("plate", plate.toUpperCase());
+      // Stockage local (MVP). Si tu veux la récupérer côté serveur => webhook Stripe + backend.
+      localStorage.setItem("plate", plate);
       window.location.href = STRIPE_LINK;
+    }
+
+    document.getElementById("subscribeBtn").addEventListener("click", goCheckout);
+    document.getElementById("navGo").addEventListener("click", () => {
+      document.getElementById("pricing").scrollIntoView({behavior:"smooth", block:"start"});
+      setTimeout(() => {
+        // focus sur plaque pour conversion
+        document.getElementById("plate").focus();
+      }, 350);
     });
   </script>
 </body>
+</html>
+
 </html>
 
